@@ -11,7 +11,7 @@ async function bootstrap() {
 	app.useGlobalFilters(new GlobalExceptionFilter());
 	app.useGlobalInterceptors(new ResponseInterceptor());
 
-	SwaggerModule.setup('api', app, require('./swagger/swagger.json'));
+	SwaggerModule.setup('docs', app, require('./swagger/swagger.json'));
 
 	app.useGlobalPipes(
 		new ValidationPipe({
