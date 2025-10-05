@@ -1,9 +1,9 @@
 {
 	"openapi": "3.0.3",
 	"info": {
-		"title": "Fortress API",
+		"title": "Fort API",
 		"version": "1.0.0",
-		"description": "Fortress is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions."
+		"description": "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions."
 	},
 	"paths": {
 		"/auth/register": {
