@@ -105,7 +105,7 @@ export class StoryService {
 				await story.save();
 			}
 
-			return { message: 'Story viewed', story };
+			return 'Story viewed';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not view story',
@@ -129,7 +129,7 @@ export class StoryService {
 			}
 
 			await this.storyModel.findByIdAndDelete(storyId).exec();
-			return { message: 'Story deleted successfully' };
+			return 'Story deleted successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete story',

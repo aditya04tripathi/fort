@@ -105,7 +105,7 @@ export class FollowService {
 				});
 			}
 
-			return { message: 'Unfollowed successfully' };
+			return 'Unfollowed successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not unfollow user',
@@ -214,7 +214,7 @@ export class FollowService {
 				$inc: { 'counts.followers': 1 },
 			});
 
-			return { message: 'Follow request accepted', follow };
+			return 'Follow request accepted';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not accept follow request',
@@ -240,7 +240,7 @@ export class FollowService {
 				);
 			}
 
-			return { message: 'Follow request rejected' };
+			return 'Follow request rejected';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not reject follow request',

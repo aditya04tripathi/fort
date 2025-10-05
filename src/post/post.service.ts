@@ -116,7 +116,7 @@ export class PostService {
 			}
 
 			await this.postModel.findByIdAndDelete(postId).exec();
-			return { message: 'Post deleted successfully' };
+			return 'Post deleted successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete post',

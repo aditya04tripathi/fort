@@ -33,7 +33,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
 		const apiResponse: ApiResponseType<null, string | string[]> = {
 			okay: false,
-			message: Array.isArray(message)
+			message: null,
+			error: Array.isArray(message)
 				? message
 				: typeof message === 'string'
 					? message

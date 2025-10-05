@@ -172,7 +172,7 @@ export class CommentService {
 				$inc: { 'counts.comments': -1 },
 			});
 
-			return { message: 'Comment deleted successfully' };
+			return 'Comment deleted successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete comment',

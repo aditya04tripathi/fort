@@ -96,7 +96,7 @@ export class NotificationService {
 			notification.isRead = true;
 			await notification.save();
 
-			return { message: 'Notification marked as read', notification };
+			return 'Notification marked as read';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not mark notification as read',
@@ -112,7 +112,7 @@ export class NotificationService {
 				{ isRead: true },
 			);
 
-			return { message: 'All notifications marked as read' };
+			return 'All notifications marked as read';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not mark all notifications as read',
@@ -134,7 +134,7 @@ export class NotificationService {
 				throw new HttpException('Notification not found', HttpStatus.NOT_FOUND);
 			}
 
-			return { message: 'Notification deleted successfully' };
+			return 'Notification deleted successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete notification',

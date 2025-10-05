@@ -42,7 +42,7 @@ export class SavedPostService {
 			});
 
 			await savedPost.save();
-			return { message: 'Post saved successfully', savedPost };
+			return 'Post saved successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not save post',
@@ -64,7 +64,7 @@ export class SavedPostService {
 				throw new HttpException('Saved post not found', HttpStatus.NOT_FOUND);
 			}
 
-			return { message: 'Post unsaved successfully' };
+			return 'Post unsaved successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not unsave post',

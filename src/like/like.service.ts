@@ -52,7 +52,7 @@ export class LikeService {
 				});
 			}
 
-			return { message: 'Liked successfully', like: newLike };
+			return 'Liked successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not like target',
@@ -86,7 +86,7 @@ export class LikeService {
 				});
 			}
 
-			return { message: 'Unliked successfully' };
+			return 'Unliked successfully';
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not unlike target',
