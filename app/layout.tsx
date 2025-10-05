@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s | Fort",
   },
   description:
-    "A safe-space for men to talk about their mental health anonymously.",
+    "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
   authors: [
     {
       name: "Aditya Tripathi",
@@ -39,6 +39,21 @@ export const metadata: Metadata = {
   ],
   creator: "Aditya Tripathi",
   keywords: ["fort", "mental health", "anonymous"],
+  openGraph: {
+    title: "Fort | A Safe Space",
+    description:
+      "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
+    url: "https://menmattertoo.space",
+    siteName: "Fort",
+    images: [
+      {
+        url: "https://menmattertoo.space/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Fort",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

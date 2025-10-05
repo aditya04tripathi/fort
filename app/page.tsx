@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <Suspense fallback={<LoadingComponent />}>
       <div className="w-full h-screen flex flex-col items-center justify-center">
-        <h1>WIP on Fortress</h1>
+        <h1>WIP on Fort</h1>
 
         <form action={handleTestLogin} className="mt-4">
           <Button type="submit">Test Login</Button>
