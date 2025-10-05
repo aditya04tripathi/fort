@@ -1,0 +1,397 @@
+@bearerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGUyMzk2YWQ0NmRkM2NlYTkxMTAwNGQiLCJlbWFpbCI6InRlc3R1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU5NjY2NDE1fQ.Gx_RjK2XXqqtNxZD2H4VNNU1AgcyrrKs4IjSnocujrw
+@baseUrl = http://localhost:3000
+@contentType = application/json
+@userId = YOUR_USER_ID_HERE
+@postId = YOUR_POST_ID_HERE
+@commentId = YOUR_COMMENT_ID_HERE
+@storyId = YOUR_STORY_ID_HERE
+@notificationId = YOUR_NOTIFICATION_ID_HERE
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+    "usernameOrEmail": "testuser",
+    "password": "testpassword"
+}
+
+### Register
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+    "username": "testuser",
+    "email": "testuser@example.com",
+    "password": "testpassword"
+}
+
+### Get Current User
+GET {{baseUrl}}/user/me
+Authorization: Bearer {{bearerToken}}
+
+### Get User by ID
+GET {{baseUrl}}/user/68e2396ad46dd3cea911004d
+Authorization: Bearer {{bearerToken}}
+
+### Toggle Private/Public Account
+POST {{baseUrl}}/user/private
+Authorization: Bearer {{bearerToken}}
+
+### Search Users
+GET {{baseUrl}}/user/search/testuser
+Authorization: Bearer {{bearerToken}}
+
+### Suggest Users to Follow
+GET {{baseUrl}}/user/suggestions/68e2396fd46dd3cea9110050
+Authorization: Bearer {{bearerToken}}
+
+### Update User Profile
+PUT {{baseUrl}}/user/me
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "profile": {
+        "bio": "",
+        "avatar": "https://www.gravatar.com/avatar/musiowcbzii?d=identicon",
+        "website": "",
+        "phoneNumber": "",
+        "gender": "prefer_not_to_say"
+    },
+    "username": "testuser"
+}
+
+### ============================================
+### POST ENDPOINTS
+### ============================================
+
+### Generate Feed
+GET {{baseUrl}}/post?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Feed by User
+GET {{baseUrl}}/post?userId={{userId}}&page=1&limit=10
+Authorization: Bearer {{bearerToken}}
+
+### Get Feed by Hashtag
+GET {{baseUrl}}/post?hashtag=travel&page=1&limit=10
+Authorization: Bearer {{bearerToken}}
+
+### Create Post
+POST {{baseUrl}}/post
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "media": [
+        {
+            "type": "image",
+            "url": "https://example.com/image.jpg",
+            "thumbnailUrl": "https://example.com/thumb.jpg",
+            "width": 1080,
+            "height": 1080
+        }
+    ],
+    "caption": "Beautiful sunset 🌅 #nature #photography",
+    "location": {
+        "name": "Paris, France",
+        "coordinates": {
+            "latitude": 48.8566,
+            "longitude": 2.3522
+        }
+    },
+    "hashtags": ["nature", "photography"],
+    "mentions": ["frienduser"],
+    "isCommentsEnabled": true,
+    "isLikesVisible": true
+}
+
+### Get Post by ID
+GET {{baseUrl}}/post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+
+### Update Post
+PUT {{baseUrl}}/post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "caption": "Updated caption #newhashtag",
+    "hashtags": ["newhashtag", "photography"],
+    "isCommentsEnabled": false
+}
+
+### Delete Post
+DELETE {{baseUrl}}/post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+
+### ============================================
+### COMMENT ENDPOINTS
+### ============================================
+
+### Create Comment on Post
+POST {{baseUrl}}/comment/post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "text": "Great photo! @frienduser check this out",
+    "mentions": ["frienduser"]
+}
+
+### Create Reply to Comment
+POST {{baseUrl}}/comment/post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "text": "Thanks for sharing!",
+    "parentCommentId": "{{commentId}}"
+}
+
+### Get Comments for Post
+GET {{baseUrl}}/comment/post/{{postId}}?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Replies for Comment
+GET {{baseUrl}}/comment/{{commentId}}/replies?page=1&limit=10
+Authorization: Bearer {{bearerToken}}
+
+### Get Comment by ID
+GET {{baseUrl}}/comment/{{commentId}}
+Authorization: Bearer {{bearerToken}}
+
+### Update Comment
+PUT {{baseUrl}}/comment/{{commentId}}
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "text": "Updated comment text",
+    "mentions": []
+}
+
+### Delete Comment
+DELETE {{baseUrl}}/comment/{{commentId}}
+Authorization: Bearer {{bearerToken}}
+
+### ============================================
+### LIKE ENDPOINTS
+### ============================================
+
+### Like a Post
+POST {{baseUrl}}/like
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "targetType": "post",
+    "targetId": "{{postId}}"
+}
+
+### Like a Comment
+POST {{baseUrl}}/like
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "targetType": "comment",
+    "targetId": "{{commentId}}"
+}
+
+### Unlike Post
+DELETE {{baseUrl}}/like/post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+
+### Unlike Comment
+DELETE {{baseUrl}}/like/comment/{{commentId}}
+Authorization: Bearer {{bearerToken}}
+
+### Get Likes for Post
+GET {{baseUrl}}/like?targetType=post&targetId={{postId}}&page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get User's Likes
+GET {{baseUrl}}/like/user/{{userId}}?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Check if Liked
+GET {{baseUrl}}/like/check/post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+
+### ============================================
+### FOLLOW ENDPOINTS
+### ============================================
+
+### Follow User
+POST {{baseUrl}}/follow/{{userId}}
+Authorization: Bearer {{bearerToken}}
+
+### Unfollow User
+DELETE {{baseUrl}}/follow/{{userId}}
+Authorization: Bearer {{bearerToken}}
+
+### Get Followers
+GET {{baseUrl}}/follow/followers/{{userId}}?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Following
+GET {{baseUrl}}/follow/following/{{userId}}?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Pending Follow Requests
+GET {{baseUrl}}/follow/requests/pending?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Accept Follow Request
+POST {{baseUrl}}/follow/requests/{{userId}}/accept
+Authorization: Bearer {{bearerToken}}
+
+### Reject Follow Request
+DELETE {{baseUrl}}/follow/requests/{{userId}}/reject
+Authorization: Bearer {{bearerToken}}
+
+### ============================================
+### STORY ENDPOINTS
+### ============================================
+
+### Create Story
+POST {{baseUrl}}/story
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "media": {
+        "type": "image",
+        "url": "https://example.com/story.jpg",
+        "thumbnailUrl": "https://example.com/story-thumb.jpg",
+        "duration": 5000
+    },
+    "stickers": [
+        {
+            "type": "location",
+            "data": { "name": "Paris" },
+            "position": { "x": 100, "y": 200 }
+        }
+    ]
+}
+
+### Get Stories Feed
+GET {{baseUrl}}/story?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get User's Stories
+GET {{baseUrl}}/story/user/{{userId}}
+Authorization: Bearer {{bearerToken}}
+
+### Get Story by ID
+GET {{baseUrl}}/story/{{storyId}}
+Authorization: Bearer {{bearerToken}}
+
+### View Story
+POST {{baseUrl}}/story/{{storyId}}/view
+Authorization: Bearer {{bearerToken}}
+
+### Get Story Viewers
+GET {{baseUrl}}/story/{{storyId}}/viewers
+Authorization: Bearer {{bearerToken}}
+
+### Delete Story
+DELETE {{baseUrl}}/story/{{storyId}}
+Authorization: Bearer {{bearerToken}}
+
+### ============================================
+### SAVED POST ENDPOINTS
+### ============================================
+
+### Save Post
+POST {{baseUrl}}/saved-post
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "postId": "{{postId}}",
+    "collectionName": "Travel"
+}
+
+### Unsave Post
+DELETE {{baseUrl}}/saved-post/{{postId}}
+Authorization: Bearer {{bearerToken}}
+
+### Get Saved Posts
+GET {{baseUrl}}/saved-post?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Saved Posts by Collection
+GET {{baseUrl}}/saved-post?collectionName=Travel&page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Collections
+GET {{baseUrl}}/saved-post/collections
+Authorization: Bearer {{bearerToken}}
+
+### Check if Post is Saved
+GET {{baseUrl}}/saved-post/check/{{postId}}
+Authorization: Bearer {{bearerToken}}
+
+### ============================================
+### NOTIFICATION ENDPOINTS
+### ============================================
+
+### Get Notifications
+GET {{baseUrl}}/notification?page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Unread Notifications Only
+GET {{baseUrl}}/notification?unreadOnly=true&page=1&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Unread Count
+GET {{baseUrl}}/notification/unread-count
+Authorization: Bearer {{bearerToken}}
+
+### Mark Notification as Read
+PATCH {{baseUrl}}/notification/{{notificationId}}/read
+Authorization: Bearer {{bearerToken}}
+
+### Mark All as Read
+PATCH {{baseUrl}}/notification/read-all
+Authorization: Bearer {{bearerToken}}
+
+### Delete Notification
+DELETE {{baseUrl}}/notification/{{notificationId}}
+Authorization: Bearer {{bearerToken}}
+
+### Create Notification (Internal)
+POST {{baseUrl}}/notification
+Authorization: Bearer {{bearerToken}}
+Content-Type: {{contentType}}
+
+{
+    "recipientId": "{{userId}}",
+    "type": "like",
+    "actorId": "{{userId}}",
+    "message": "liked your post",
+    "postId": "{{postId}}"
+}
+
+### ============================================
+### HASHTAG ENDPOINTS
+### ============================================
+
+### Search Hashtags
+GET {{baseUrl}}/hashtag/search?query=nature&limit=20
+Authorization: Bearer {{bearerToken}}
+
+### Get Trending Hashtags
+GET {{baseUrl}}/hashtag/trending?limit=10
+Authorization: Bearer {{bearerToken}}
+
+### Get Hashtag Info
+GET {{baseUrl}}/hashtag/nature
+Authorization: Bearer {{bearerToken}}
+
+### Get Posts by Hashtag
+GET {{baseUrl}}/hashtag/nature/posts?page=1&limit=20
+Authorization: Bearer {{bearerToken}}

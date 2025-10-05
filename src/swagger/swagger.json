@@ -1,0 +1,3632 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Fortress API",
+		"version": "1.0.0",
+		"description": "Fortress is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions."
+	},
+	"paths": {
+		"/auth/register": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "Register a new user",
+				"operationId": "registerUser",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegisterUserDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "User registered successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RegisterSuccessResponse"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Username or email already in use",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal server error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"tags": ["Auth"],
+				"summary": "Login user",
+				"operationId": "loginUser",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginUserDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Login successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginSuccessResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Invalid credentials",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal server error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/comment/post/{postId}": {
+			"post": {
+				"tags": ["Comment"],
+				"summary": "Create comment on post",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "postId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCommentDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Comment created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CommentResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Comment"],
+				"summary": "Get comments for a post",
+				"parameters": [
+					{
+						"name": "postId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "parentCommentId",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Comments list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CommentsListResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/comment/{id}": {
+			"get": {
+				"tags": ["Comment"],
+				"summary": "Get comment by id",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Comment",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CommentResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Comment"],
+				"summary": "Update comment",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCommentDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CommentResponse"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Comment"],
+				"summary": "Delete comment",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deleted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GenericMessageResponse"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/comment/{id}/replies": {
+			"get": {
+				"tags": ["Comment"],
+				"summary": "Get replies to a comment",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Replies list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CommentsListResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/follow/{followingId}": {
+			"post": {
+				"tags": ["Follow"],
+				"summary": "Follow a user",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "followingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Follow created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FollowResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request or already following",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Follow"],
+				"summary": "Unfollow a user",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "followingId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Unfollowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GenericMessageResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Follow not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/follow/followers/{userId}": {
+			"get": {
+				"tags": ["Follow"],
+				"summary": "Get followers for a user",
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["pending", "accepted"]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Followers list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FollowersListResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/follow/following/{userId}": {
+			"get": {
+				"tags": ["Follow"],
+				"summary": "Get following for a user",
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["pending", "accepted"]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Following list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FollowingListResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/follow/requests/pending": {
+			"get": {
+				"tags": ["Follow"],
+				"summary": "Get pending follow requests for current user",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Pending requests",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FollowersListResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/follow/requests/{followerId}/accept": {
+			"post": {
+				"tags": ["Follow"],
+				"summary": "Accept follow request",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "followerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Accepted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FollowResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Request not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/follow/requests/{followerId}/reject": {
+			"delete": {
+				"tags": ["Follow"],
+				"summary": "Reject follow request",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "followerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Rejected",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GenericMessageResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Request not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/hashtag/search": {
+			"get": {
+				"tags": ["Hashtag"],
+				"summary": "Search hashtags",
+				"parameters": [
+					{
+						"name": "query",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Search results",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Hashtag"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"/hashtag/trending": {
+				"get": {
+					"tags": ["Hashtag"],
+					"summary": "Get trending hashtags",
+					"parameters": [
+						{
+							"name": "limit",
+							"in": "query",
+							"schema": {
+								"type": "integer",
+								"default": 10
+							}
+						}
+					],
+					"responses": {
+						"200": {
+							"description": "Trending",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "array",
+										"items": {
+											"$ref": "#/components/schemas/Hashtag"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"/hashtag/{hashtag}": {
+					"get": {
+						"tags": ["Hashtag"],
+						"summary": "Get hashtag info",
+						"parameters": [
+							{
+								"name": "hashtag",
+								"in": "path",
+								"required": true,
+								"schema": {
+									"type": "string"
+								}
+							}
+						],
+						"responses": {
+							"200": {
+								"description": "Hashtag",
+								"content": {
+									"application/json": {
+										"schema": {
+											"$ref": "#/components/schemas/Hashtag"
+										}
+									}
+								}
+							},
+							"404": {
+								"description": "Not found"
+							}
+						}
+					},
+					"/hashtag/{hashtag}/posts": {
+						"get": {
+							"tags": ["Hashtag"],
+							"summary": "Get posts for a hashtag",
+							"parameters": [
+								{
+									"name": "hashtag",
+									"in": "query",
+									"required": true,
+									"schema": {
+										"type": "string"
+									}
+								},
+								{
+									"name": "page",
+									"in": "query",
+									"schema": {
+										"type": "integer",
+										"default": 1
+									}
+								},
+								{
+									"name": "limit",
+									"in": "query",
+									"schema": {
+										"type": "integer",
+										"default": 20
+									}
+								}
+							],
+							"responses": {
+								"200": {
+									"description": "Posts list",
+									"content": {
+										"application/json": {
+											"schema": {
+												"$ref": "#/components/schemas/HashtagPostsResponse"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/like": {
+			"post": {
+				"tags": ["Like"],
+				"summary": "Like a target (post or comment)",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateLikeDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Liked",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LikeResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Already liked or invalid",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Like"],
+				"summary": "Get likes",
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "targetType",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["post", "comment"]
+						}
+					},
+					{
+						"name": "targetId",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Likes list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LikesListResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/like/{targetType}/{targetId}": {
+			"delete": {
+				"tags": ["Like"],
+				"summary": "Unlike target",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "targetType",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"enum": ["post", "comment"]
+						}
+					},
+					{
+						"name": "targetId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Unliked",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GenericMessageResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Like not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/like/user/{userId}": {
+			"get": {
+				"tags": ["Like"],
+				"summary": "Get likes by user",
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User likes",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LikesListResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/like/check/{targetType}/{targetId}": {
+			"get": {
+				"tags": ["Like"],
+				"summary": "Check if current user liked the target",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "targetType",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"enum": ["post", "comment"]
+						}
+					},
+					{
+						"name": "targetId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Check result",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"liked": {
+											"type": "boolean"
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/notification": {
+			"post": {
+				"tags": ["Notification"],
+				"summary": "Create notification",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateNotificationDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Notification created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotificationResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": ["Notification"],
+				"summary": "Get notifications",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "unreadOnly",
+						"in": "query",
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Notifications list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotificationsListResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/notification/unread-count": {
+			"get": {
+				"tags": ["Notification"],
+				"summary": "Get unread count",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Unread count",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"unreadCount": {
+											"type": "integer"
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/notification/{id}/read": {
+			"patch": {
+				"tags": ["Notification"],
+				"summary": "Mark notification as read",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Marked as read",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotificationResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/notification/read-all": {
+			"patch": {
+				"tags": ["Notification"],
+				"summary": "Mark all notifications as read",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "All marked",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GenericMessageResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"/notification/{id}": {
+				"delete": {
+					"tags": ["Notification"],
+					"summary": "Delete notification",
+					"security": [
+						{
+							"bearerAuth": []
+						}
+					],
+					"parameters": [
+						{
+							"name": "id",
+							"in": "path",
+							"required": true,
+							"schema": {
+								"type": "string"
+							}
+						}
+					],
+					"responses": {
+						"200": {
+							"description": "Deleted",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/GenericMessageResponse"
+									}
+								}
+							}
+						},
+						"404": {
+							"description": "Not found",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						},
+						"401": {
+							"description": "Unauthorized"
+						}
+					}
+				}
+			}
+		},
+		"components": {
+			"securitySchemes": {
+				"bearerAuth": {
+					"type": "http",
+					"scheme": "bearer",
+					"bearerFormat": "JWT"
+				}
+			},
+			"schemas": {
+				"CreateNotificationDto": {
+					"type": "object",
+					"required": ["recipientId", "type", "actorId", "message"],
+					"properties": {
+						"recipientId": {
+							"type": "string"
+						},
+						"type": {
+							"type": "string",
+							"enum": [
+								"like",
+								"comment",
+								"follow",
+								"mention",
+								"story_reply",
+								"follow_request"
+							]
+						},
+						"actorId": {
+							"type": "string"
+						},
+						"message": {
+							"type": "string"
+						},
+						"postId": {
+							"type": "string"
+						},
+						"commentId": {
+							"type": "string"
+						},
+						"storyId": {
+							"type": "string"
+						}
+					}
+				},
+				"Notification": {
+					"type": "object",
+					"properties": {
+						"_id": {
+							"type": "string"
+						},
+						"recipientId": {
+							"type": "string"
+						},
+						"actorId": {
+							"type": "string"
+						},
+						"type": {
+							"type": "string"
+						},
+						"message": {
+							"type": "string"
+						},
+						"isRead": {
+							"type": "boolean"
+						},
+						"createdAt": {
+							"type": "string",
+							"format": "date-time"
+						}
+					}
+				},
+				"NotificationResponse": {
+					"type": "object",
+					"properties": {
+						"okay": {
+							"type": "boolean"
+						},
+						"statusCode": {
+							"type": "integer"
+						},
+						"message": {
+							"$ref": "#/components/schemas/Notification"
+						}
+					}
+				},
+				"NotificationsListResponse": {
+					"type": "object",
+					"properties": {
+						"notifications": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Notification"
+							}
+						},
+						"unreadCount": {
+							"type": "integer"
+						},
+						"pagination": {
+							"type": "object",
+							"properties": {
+								"page": {
+									"type": "integer"
+								},
+								"limit": {
+									"type": "integer"
+								},
+								"total": {
+									"type": "integer"
+								},
+								"totalPages": {
+									"type": "integer"
+								}
+							}
+						}
+					}
+				},
+				"GenericMessageResponse": {
+					"type": "object",
+					"properties": {
+						"okay": {
+							"type": "boolean"
+						},
+						"statusCode": {
+							"type": "integer"
+						},
+						"message": {
+							"type": "string"
+						}
+					}
+				},
+				"ErrorResponse": {
+					"type": "object",
+					"properties": {
+						"okay": {
+							"type": "boolean"
+						},
+						"statusCode": {
+							"type": "integer"
+						},
+						"message": {
+							"type": "string"
+						}
+					}
+				},
+				"ValidationErrorResponse": {
+					"type": "object",
+					"properties": {
+						"okay": {
+							"type": "boolean"
+						},
+						"statusCode": {
+							"type": "integer"
+						},
+						"message": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"StickerPositionDto": {
+					"type": "object",
+					"properties": {
+						"x": {
+							"type": "number"
+						},
+						"y": {
+							"type": "number"
+						}
+					}
+				},
+				"StickerDto": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string",
+							"enum": [
+								"location",
+								"mention",
+								"hashtag",
+								"poll",
+								"question",
+								"music"
+							]
+						},
+						"data": {
+							"type": "object"
+						},
+						"position": {
+							"$ref": "#/components/schemas/StickerPositionDto"
+						}
+					}
+				},
+				"StoryMediaDto": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string",
+							"enum": ["image", "video"]
+						},
+						"url": {
+							"type": "string"
+						},
+						"thumbnailUrl": {
+							"type": "string"
+						},
+						"duration": {
+							"type": "number"
+						}
+					}
+				},
+				"CreateStoryDto": {
+					"type": "object",
+					"required": ["media"],
+					"properties": {
+						"media": {
+							"$ref": "#/components/schemas/StoryMediaDto"
+						},
+						"stickers": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/StickerDto"
+							}
+						},
+						"visibility": {
+							"type": "string",
+							"enum": ["public", "followers", "close_friends"]
+						},
+						"allowReplies": {
+							"type": "boolean"
+						}
+					}
+				},
+				"Story": {
+					"type": "object",
+					"properties": {
+						"_id": {
+							"type": "string"
+						},
+						"userId": {
+							"type": "string"
+						},
+						"username": {
+							"type": "string"
+						},
+						"userAvatar": {
+							"type": "string"
+						},
+						"media": {
+							"$ref": "#/components/schemas/StoryMediaDto"
+						},
+						"stickers": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/StickerDto"
+							}
+						},
+						"counts": {
+							"type": "object",
+							"properties": {
+								"views": {
+									"type": "integer"
+								}
+							}
+						},
+						"expiresAt": {
+							"type": "string",
+							"format": "date-time"
+						},
+						"createdAt": {
+							"type": "string",
+							"format": "date-time"
+						}
+					}
+				},
+				"StoryResponse": {
+					"type": "object",
+					"properties": {
+						"okay": {
+							"type": "boolean"
+						},
+						"statusCode": {
+							"type": "integer"
+						},
+						"message": {
+							"$ref": "#/components/schemas/Story"
+						}
+					}
+				},
+				"StoryViewResponse": {
+					"type": "object",
+					"properties": {
+						"okay": {
+							"type": "boolean"
+						},
+						"statusCode": {
+							"type": "integer"
+						},
+						"message": {
+							"type": "object",
+							"properties": {
+								"story": {
+									"$ref": "#/components/schemas/Story"
+								}
+							}
+						}
+					}
+				},
+				"User": {
+					"type": "object",
+					"properties": {
+						"_id": {
+							"type": "string"
+						},
+						"username": {
+							"type": "string"
+						},
+						"profile": {
+							"type": "object",
+							"properties": {
+								"avatar": {
+									"type": "string"
+								},
+								"fullName": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/post": {
+			"get": {
+				"tags": ["Post"],
+				"summary": "Generate feed",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "userId",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "hashtag",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Feed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Post"
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"post": {
+				"tags": ["Post"],
+				"summary": "Create a new post",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePostDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Post created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			}
+		},
+		"/post/{id}": {
+			"get": {
+				"tags": ["Post"],
+				"summary": "Get post by id",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Post",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Post"],
+				"summary": "Update post",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePostDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Post updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostResponse"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Post"],
+				"summary": "Delete post",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deleted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GenericMessageResponse"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/saved-post": {
+			"post": {
+				"tags": ["SavedPost"],
+				"summary": "Save a post",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SavePostDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Saved",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPostResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"get": {
+				"tags": ["SavedPost"],
+				"summary": "Get saved posts for current user",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "collectionName",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Saved posts list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SavedPostsListResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/saved-post/{postId}": {
+			"delete": {
+				"tags": ["SavedPost"],
+				"summary": "Unsave a post",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "postId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Unsaved",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GenericMessageResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"/saved-post/collections": {
+				"get": {
+					"tags": ["SavedPost"],
+					"summary": "Get collections",
+					"security": [
+						{
+							"bearerAuth": []
+						}
+					],
+					"responses": {
+						"200": {
+							"description": "Collections",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"name": {
+													"type": "string"
+												},
+												"count": {
+													"type": "integer"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"/saved-post/check/{postId}": {
+					"get": {
+						"tags": ["SavedPost"],
+						"summary": "Check if post is saved",
+						"security": [
+							{
+								"bearerAuth": []
+							}
+						],
+						"parameters": [
+							{
+								"name": "postId",
+								"in": "path",
+								"required": true,
+								"schema": {
+									"type": "string"
+								}
+							}
+						],
+						"responses": {
+							"200": {
+								"description": "Check result",
+								"content": {
+									"application/json": {
+										"schema": {
+											"type": "object",
+											"properties": {
+												"saved": {
+													"type": "boolean"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/story": {
+			"post": {
+				"tags": ["Story"],
+				"summary": "Create story",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateStoryDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Story created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoryResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Story"],
+				"summary": "Get stories (feed)",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"name": "page",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 1
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "integer",
+							"default": 20
+						}
+					},
+					{
+						"name": "userId",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Stories list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Story"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/story/user/{userId}": {
+			"get": {
+				"tags": ["Story"],
+				"summary": "Get user stories",
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User stories",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Story"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"/story/{id}": {
+				"get": {
+					"tags": ["Story"],
+					"summary": "Get story by id",
+					"parameters": [
+						{
+							"name": "id",
+							"in": "path",
+							"required": true,
+							"schema": {
+								"type": "string"
+							}
+						}
+					],
+					"security": [
+						{
+							"bearerAuth": []
+						}
+					],
+					"responses": {
+						"200": {
+							"description": "Story",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/StoryResponse"
+									}
+								}
+							}
+						},
+						"404": {
+							"description": "Not found",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						},
+						"410": {
+							"description": "Expired",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						}
+					}
+				},
+				"post": {
+					"tags": ["Story"],
+					"summary": "View a story",
+					"parameters": [
+						{
+							"name": "id",
+							"in": "path",
+							"required": true,
+							"schema": {
+								"type": "string"
+							}
+						}
+					],
+					"security": [
+						{
+							"bearerAuth": []
+						}
+					],
+					"responses": {
+						"200": {
+							"description": "Viewed",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/StoryViewResponse"
+									}
+								}
+							}
+						},
+						"404": {
+							"description": "Not found",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						},
+						"401": {
+							"description": "Unauthorized",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						}
+					}
+				},
+				"delete": {
+					"tags": ["Story"],
+					"summary": "Delete story",
+					"parameters": [
+						{
+							"name": "id",
+							"in": "path",
+							"required": true,
+							"schema": {
+								"type": "string"
+							}
+						}
+					],
+					"security": [
+						{
+							"bearerAuth": []
+						}
+					],
+					"responses": {
+						"200": {
+							"description": "Deleted",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/GenericMessageResponse"
+									}
+								}
+							}
+						},
+						"403": {
+							"description": "Forbidden",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						},
+						"401": {
+							"description": "Unauthorized",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"/story/{id}/viewers": {
+				"get": {
+					"tags": ["Story"],
+					"summary": "Get story viewers",
+					"parameters": [
+						{
+							"name": "id",
+							"in": "path",
+							"required": true,
+							"schema": {
+								"type": "string"
+							}
+						}
+					],
+					"security": [
+						{
+							"bearerAuth": []
+						}
+					],
+					"responses": {
+						"200": {
+							"description": "Viewers list",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"viewers": {
+												"type": "array",
+												"items": {
+													"$ref": "#/components/schemas/User"
+												}
+											},
+											"totalViews": {
+												"type": "integer"
+											}
+										}
+									}
+								}
+							}
+						},
+						"403": {
+							"description": "Forbidden",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						},
+						"401": {
+							"description": "Unauthorized",
+							"content": {
+								"application/json": {
+									"schema": {
+										"$ref": "#/components/schemas/ErrorResponse"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/me": {
+			"get": {
+				"tags": ["User"],
+				"summary": "Get current user",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Current user",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["User"],
+				"summary": "Update current user's profile",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "User updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Validation error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/{id}": {
+			"get": {
+				"tags": ["User"],
+				"summary": "Get user by id",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponse"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Private profile",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "User not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/search/{query}": {
+			"get": {
+				"tags": ["User"],
+				"summary": "Search users",
+				"parameters": [
+					{
+						"name": "query",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Search results",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/User"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/suggestions/{id}": {
+			"get": {
+				"tags": ["User"],
+				"summary": "Get user suggestions",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Suggestions",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/User"
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "User not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/private": {
+			"post": {
+				"tags": ["User"],
+				"summary": "Toggle private account",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Toggled privacy",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"RegisterUserDto": {
+				"type": "object",
+				"properties": {
+					"username": {
+						"type": "string",
+						"example": "john_doe"
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "john.doe@example.com"
+					},
+					"password": {
+						"type": "string",
+						"example": "password123"
+					}
+				},
+				"required": ["username", "email", "password"]
+			},
+			"RegisterSuccessResponse": {
+				"type": "object",
+				"properties": {
+					"user": {
+						"$ref": "#/components/schemas/User"
+					}
+				}
+			},
+			"LoginUserDto": {
+				"type": "object",
+				"properties": {
+					"usernameOrEmail": {
+						"type": "string",
+						"example": "testuser"
+					},
+					"password": {
+						"type": "string",
+						"example": "testpassword"
+					}
+				},
+				"required": ["usernameOrEmail", "password"]
+			},
+			"LoginSuccessResponse": {
+				"type": "object",
+				"properties": {
+					"user": {
+						"$ref": "#/components/schemas/User"
+					},
+					"token": {
+						"type": "string",
+						"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+					}
+				}
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string",
+						"format": "email"
+					},
+					"profile": {
+						"$ref": "#/components/schemas/UserProfile"
+					},
+					"counts": {
+						"$ref": "#/components/schemas/UserCounts"
+					},
+					"isVerified": {
+						"type": "boolean"
+					},
+					"isPrivate": {
+						"type": "boolean"
+					},
+					"lastLoginAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"UserProfile": {
+				"type": "object",
+				"properties": {
+					"fullName": {
+						"type": "string"
+					},
+					"bio": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"website": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					},
+					"gender": {
+						"type": "string",
+						"enum": ["male", "female", "other", "prefer_not_to_say"]
+					}
+				}
+			},
+			"UserCounts": {
+				"type": "object",
+				"properties": {
+					"posts": {
+						"type": "integer"
+					},
+					"followers": {
+						"type": "integer"
+					},
+					"following": {
+						"type": "integer"
+					}
+				}
+			},
+			"ErrorResponse": {
+				"type": "object",
+				"properties": {
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"type": "string"
+					},
+					"error": {
+						"type": "string"
+					},
+					"okay": {
+						"type": "boolean"
+					}
+				}
+			},
+			"ValidationErrorResponse": {
+				"type": "object",
+				"properties": {
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"error": {
+						"type": "string"
+					},
+					"okay": {
+						"type": "boolean"
+					}
+				}
+			},
+			"CreateCommentDto": {
+				"type": "object",
+				"required": ["text"],
+				"properties": {
+					"text": {
+						"type": "string"
+					},
+					"parentCommentId": {
+						"type": "string"
+					},
+					"mentions": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"UpdateCommentDto": {
+				"type": "object",
+				"required": ["text"],
+				"properties": {
+					"text": {
+						"type": "string"
+					},
+					"mentions": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"Comment": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"postId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"userAvatar": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"parentCommentId": {
+						"type": "string"
+					},
+					"mentions": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"CommentsListResponse": {
+				"type": "object",
+				"properties": {
+					"comments": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Comment"
+						}
+					},
+					"pagination": {
+						"type": "object",
+						"properties": {
+							"page": {
+								"type": "integer"
+							},
+							"limit": {
+								"type": "integer"
+							},
+							"total": {
+								"type": "integer"
+							},
+							"totalPages": {
+								"type": "integer"
+							}
+						}
+					}
+				}
+			},
+			"CommentResponse": {
+				"type": "object",
+				"properties": {
+					"okay": {
+						"type": "boolean"
+					},
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"$ref": "#/components/schemas/Comment"
+					}
+				}
+			},
+			"GenericMessageResponse": {
+				"type": "object",
+				"properties": {
+					"okay": {
+						"type": "boolean"
+					},
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"type": "string"
+					}
+				}
+			},
+			"Follow": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"followerId": {
+						"type": "string"
+					},
+					"followingId": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": ["pending", "accepted"]
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"FollowResponse": {
+				"type": "object",
+				"properties": {
+					"okay": {
+						"type": "boolean"
+					},
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"$ref": "#/components/schemas/Follow"
+					}
+				}
+			},
+			"FollowersListResponse": {
+				"type": "object",
+				"properties": {
+					"followers": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Follow"
+						}
+					},
+					"pagination": {
+						"type": "object",
+						"properties": {
+							"page": {
+								"type": "integer"
+							},
+							"limit": {
+								"type": "integer"
+							},
+							"total": {
+								"type": "integer"
+							},
+							"totalPages": {
+								"type": "integer"
+							}
+						}
+					}
+				}
+			},
+			"FollowingListResponse": {
+				"type": "object",
+				"properties": {
+					"following": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Follow"
+						}
+					},
+					"pagination": {
+						"type": "object",
+						"properties": {
+							"page": {
+								"type": "integer"
+							},
+							"limit": {
+								"type": "integer"
+							},
+							"total": {
+								"type": "integer"
+							},
+							"totalPages": {
+								"type": "integer"
+							}
+						}
+					}
+				}
+			},
+			"Hashtag": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"count": {
+						"type": "integer"
+					},
+					"recentCount": {
+						"type": "integer"
+					},
+					"trending": {
+						"type": "boolean"
+					}
+				}
+			},
+			"HashtagPostsResponse": {
+				"type": "object",
+				"properties": {
+					"posts": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Post"
+						}
+					},
+					"pagination": {
+						"type": "object",
+						"properties": {
+							"page": {
+								"type": "integer"
+							},
+							"limit": {
+								"type": "integer"
+							},
+							"total": {
+								"type": "integer"
+							},
+							"totalPages": {
+								"type": "integer"
+							}
+						}
+					}
+				}
+			},
+			"Post": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"caption": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"userAvatar": {
+						"type": "string"
+					},
+					"media": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/MediaDto"
+						}
+					},
+					"location": {
+						"$ref": "#/components/schemas/LocationDto"
+					},
+					"hashtags": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"counts": {
+						"$ref": "#/components/schemas/PostCounts"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"CreateLikeDto": {
+				"type": "object",
+				"required": ["targetType", "targetId"],
+				"properties": {
+					"targetType": {
+						"type": "string",
+						"enum": ["post", "comment"]
+					},
+					"targetId": {
+						"type": "string"
+					}
+				}
+			},
+			"Like": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"targetType": {
+						"type": "string"
+					},
+					"targetId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"LikeResponse": {
+				"type": "object",
+				"properties": {
+					"okay": {
+						"type": "boolean"
+					},
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"$ref": "#/components/schemas/Like"
+					}
+				}
+			},
+			"LikesListResponse": {
+				"type": "object",
+				"properties": {
+					"likes": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Like"
+						}
+					},
+					"pagination": {
+						"type": "object",
+						"properties": {
+							"page": {
+								"type": "integer"
+							},
+							"limit": {
+								"type": "integer"
+							},
+							"total": {
+								"type": "integer"
+							},
+							"totalPages": {
+								"type": "integer"
+							}
+						}
+					}
+				}
+			},
+			"CoordinatesDto": {
+				"type": "object",
+				"properties": {
+					"latitude": {
+						"type": "number"
+					},
+					"longitude": {
+						"type": "number"
+					}
+				}
+			},
+			"LocationDto": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"coordinates": {
+						"$ref": "#/components/schemas/CoordinatesDto"
+					}
+				}
+			},
+			"MediaDto": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": ["image", "video"]
+					},
+					"url": {
+						"type": "string"
+					},
+					"thumbnailUrl": {
+						"type": "string"
+					},
+					"width": {
+						"type": "number"
+					},
+					"height": {
+						"type": "number"
+					},
+					"duration": {
+						"type": "number"
+					}
+				}
+			},
+			"CreatePostDto": {
+				"type": "object",
+				"required": ["media"],
+				"properties": {
+					"media": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/MediaDto"
+						}
+					},
+					"caption": {
+						"type": "string"
+					},
+					"location": {
+						"$ref": "#/components/schemas/LocationDto"
+					},
+					"hashtags": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"mentions": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"isCommentsEnabled": {
+						"type": "boolean"
+					},
+					"isLikesVisible": {
+						"type": "boolean"
+					}
+				}
+			},
+			"UpdatePostDto": {
+				"type": "object",
+				"properties": {
+					"caption": {
+						"type": "string"
+					},
+					"location": {
+						"$ref": "#/components/schemas/LocationDto"
+					},
+					"hashtags": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"mentions": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"isCommentsEnabled": {
+						"type": "boolean"
+					},
+					"isLikesVisible": {
+						"type": "boolean"
+					}
+				}
+			},
+			"PostCounts": {
+				"type": "object",
+				"properties": {
+					"likes": {
+						"type": "integer"
+					},
+					"comments": {
+						"type": "integer"
+					}
+				}
+			},
+			"PostResponse": {
+				"type": "object",
+				"properties": {
+					"okay": {
+						"type": "boolean"
+					},
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"$ref": "#/components/schemas/Post"
+					}
+				}
+			},
+			"SavePostDto": {
+				"type": "object",
+				"required": ["postId"],
+				"properties": {
+					"postId": {
+						"type": "string"
+					},
+					"collectionName": {
+						"type": "string"
+					}
+				}
+			},
+			"SavedPost": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"postId": {
+						"type": "string"
+					},
+					"collectionName": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"SavedPostResponse": {
+				"type": "object",
+				"properties": {
+					"okay": {
+						"type": "boolean"
+					},
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"$ref": "#/components/schemas/SavedPost"
+					}
+				}
+			},
+			"SavedPostsListResponse": {
+				"type": "object",
+				"properties": {
+					"savedPosts": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/SavedPost"
+						}
+					},
+					"pagination": {
+						"type": "object",
+						"properties": {
+							"page": {
+								"type": "integer"
+							},
+							"limit": {
+								"type": "integer"
+							},
+							"total": {
+								"type": "integer"
+							},
+							"totalPages": {
+								"type": "integer"
+							}
+						}
+					}
+				}
+			},
+			"UpdateUserProfileDto": {
+				"type": "object",
+				"properties": {
+					"fullName": {
+						"type": "string"
+					},
+					"bio": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"website": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					},
+					"gender": {
+						"type": "string",
+						"enum": ["male", "female", "other", "prefer_not_to_say"]
+					}
+				}
+			},
+			"UpdateUserDto": {
+				"type": "object",
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string",
+						"format": "email"
+					},
+					"isPrivate": {
+						"type": "boolean"
+					},
+					"profile": {
+						"$ref": "#/components/schemas/UpdateUserProfileDto"
+					}
+				}
+			},
+			"UserResponse": {
+				"type": "object",
+				"properties": {
+					"okay": {
+						"type": "boolean"
+					},
+					"statusCode": {
+						"type": "integer"
+					},
+					"message": {
+						"$ref": "#/components/schemas/User"
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"tags": [],
+	"security": [{ "bearerAuth": [] }]
+}
