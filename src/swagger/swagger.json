@@ -2807,6 +2807,10 @@
 			"RegisterUserDto": {
 				"type": "object",
 				"properties": {
+					"fullName": {
+						"type": "string",
+						"example": "John Doe"
+					},
 					"username": {
 						"type": "string",
 						"example": "john_doe"
