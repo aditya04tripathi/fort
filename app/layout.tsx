@@ -53,6 +53,10 @@ export const metadata: Metadata = {
         alt: "Fort",
       },
     ],
+    locale: "en-AU",
+    type: "website",
+    countryName: "Australia",
+    emails: ["adityatripathi.at04@gmail.com"],
   },
 };
 
