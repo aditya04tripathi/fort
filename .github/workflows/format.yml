@@ -19,11 +19,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
       - name: Install Dependencies
-        run: pnpm install
+        run: npm install
       - name: Run Prettier
-        run: pnpm run format
+        run: npm run format
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
