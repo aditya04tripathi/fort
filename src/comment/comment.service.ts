@@ -49,7 +49,7 @@ export class CommentService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not create comment',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -87,7 +87,7 @@ export class CommentService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get comments',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -102,7 +102,7 @@ export class CommentService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get comment',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -140,7 +140,7 @@ export class CommentService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not update comment',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -176,7 +176,7 @@ export class CommentService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete comment',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -209,7 +209,7 @@ export class CommentService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get replies',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}

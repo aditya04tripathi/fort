@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './utils/filters/global-exception.filter';
 import { ResponseInterceptor } from './utils/interceptors/response.interceptor';
 import { SwaggerModule } from '@nestjs/swagger';
+import swaggerJson from './swagger/swagger.json';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -11,7 +12,7 @@ async function bootstrap() {
 	app.useGlobalFilters(new GlobalExceptionFilter());
 	app.useGlobalInterceptors(new ResponseInterceptor());
 
-	SwaggerModule.setup('docs', app, require('./swagger/swagger.json'));
+	SwaggerModule.setup('docs', app, swaggerJson as any);
 
 	app.useGlobalPipes(
 		new ValidationPipe({

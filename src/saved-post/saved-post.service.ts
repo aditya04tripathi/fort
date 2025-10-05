@@ -46,7 +46,7 @@ export class SavedPostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not save post',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -68,7 +68,7 @@ export class SavedPostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not unsave post',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -105,7 +105,7 @@ export class SavedPostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get saved posts',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -131,7 +131,7 @@ export class SavedPostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get collections',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}

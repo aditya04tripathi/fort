@@ -31,7 +31,7 @@ export class HashtagService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get hashtag',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -52,7 +52,7 @@ export class HashtagService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not search hashtags',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -71,7 +71,7 @@ export class HashtagService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get trending hashtags',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -104,7 +104,7 @@ export class HashtagService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get hashtag posts',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}

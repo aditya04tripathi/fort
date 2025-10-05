@@ -77,7 +77,7 @@ export class FollowService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not follow user',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -109,7 +109,7 @@ export class FollowService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not unfollow user',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -145,7 +145,7 @@ export class FollowService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get followers',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -181,7 +181,7 @@ export class FollowService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get following',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -218,7 +218,7 @@ export class FollowService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not accept follow request',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -244,7 +244,7 @@ export class FollowService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not reject follow request',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -282,7 +282,7 @@ export class FollowService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get pending requests',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}

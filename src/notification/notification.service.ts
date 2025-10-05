@@ -34,7 +34,7 @@ export class NotificationService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not create notification',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -75,7 +75,7 @@ export class NotificationService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get notifications',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -100,7 +100,7 @@ export class NotificationService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not mark notification as read',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -116,7 +116,7 @@ export class NotificationService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not mark all notifications as read',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -138,7 +138,7 @@ export class NotificationService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete notification',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}

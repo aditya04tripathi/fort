@@ -33,7 +33,7 @@ export class PostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not generate feed',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -50,7 +50,7 @@ export class PostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not create post',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -65,7 +65,7 @@ export class PostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get post',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -96,7 +96,7 @@ export class PostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not update post',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -120,7 +120,7 @@ export class PostService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete post',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}

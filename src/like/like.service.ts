@@ -56,7 +56,7 @@ export class LikeService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not like target',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -90,7 +90,7 @@ export class LikeService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not unlike target',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -126,7 +126,7 @@ export class LikeService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get likes',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -179,7 +179,7 @@ export class LikeService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get user likes',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}

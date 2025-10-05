@@ -27,7 +27,7 @@ export class StoryService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not create story',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -65,7 +65,7 @@ export class StoryService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get stories',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -86,7 +86,7 @@ export class StoryService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get story',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -109,7 +109,7 @@ export class StoryService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not view story',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -133,7 +133,7 @@ export class StoryService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not delete story',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -152,7 +152,7 @@ export class StoryService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get user stories',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
@@ -182,7 +182,7 @@ export class StoryService {
 		} catch (error) {
 			throw new HttpException(
 				(error as Error).message || 'Could not get story viewers',
-				(error as any).status || HttpStatus.INTERNAL_SERVER_ERROR,
+				error.status || HttpStatus.INTERNAL_SERVER_ERROR,
 			);
 		}
 	}
