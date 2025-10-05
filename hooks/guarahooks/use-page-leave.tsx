@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type PageLeaveOptions = {
   confirmationMessage?: string;
@@ -36,8 +36,8 @@ export function usePageLeave(options: PageLeaveOptions = {}): PageLeaveResult {
       if (showConfirmation) {
         event.preventDefault();
         // Custom message (may be ignored by modern browsers)
-        event.returnValue = confirmationMessage || '';
-        return confirmationMessage || '';
+        event.returnValue = confirmationMessage || "";
+        return confirmationMessage || "";
       }
       return undefined;
     },
@@ -46,29 +46,29 @@ export function usePageLeave(options: PageLeaveOptions = {}): PageLeaveResult {
 
   // Handle visibility change (tab switch)
   const handleVisibilityChange = useCallback(() => {
-    if (document.visibilityState === 'hidden') {
+    if (document.visibilityState === "hidden") {
       setIsPageLeft(true);
       if (callbackRef.current) {
         callbackRef.current();
       }
-    } else if (document.visibilityState === 'visible') {
+    } else if (document.visibilityState === "visible") {
       setIsPageLeft(false);
     }
   }, []);
 
   useEffect(() => {
     // Skip in non-browser environments to support SSR
-    if (typeof window === 'undefined') return undefined;
+    if (typeof window === "undefined") return undefined;
 
     // Add beforeunload event for page close/refresh
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     // Add visibilitychange for tab switching
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [handleBeforeUnload, handleVisibilityChange]);
 

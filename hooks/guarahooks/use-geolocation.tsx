@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface GeolocationState {
   position: GeolocationPosition | null;
@@ -17,17 +17,17 @@ export function useGeolocation(options?: PositionOptions): GeolocationState {
   const watchId = useRef<number | null>(null);
 
   const clearWatch = useCallback(() => {
-    if (watchId.current !== null && 'geolocation' in navigator) {
+    if (watchId.current !== null && "geolocation" in navigator) {
       navigator.geolocation.clearWatch(watchId.current);
       watchId.current = null;
     }
   }, []);
 
   useEffect(() => {
-    if (!('geolocation' in navigator)) {
+    if (!("geolocation" in navigator)) {
       setError({
         code: 0,
-        message: 'Geolocation API not supported',
+        message: "Geolocation API not supported",
       } as GeolocationPositionError);
       setIsLoading(false);
       return;

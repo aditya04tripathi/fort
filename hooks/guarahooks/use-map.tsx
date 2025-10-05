@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from "react";
 
 export type UseMapResult<K, V> = {
   map: Map<K, V>;

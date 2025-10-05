@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 
 export function useDebounceCallback<
   Fn extends (...args: Parameters<Fn>) => void,

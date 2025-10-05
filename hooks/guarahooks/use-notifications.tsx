@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-type NotificationPermission = 'default' | 'granted' | 'denied';
+type NotificationPermission = "default" | "granted" | "denied";
 
 type NotificationOptions<TData = void> = {
   body?: string;
@@ -15,7 +15,7 @@ type NotificationOptions<TData = void> = {
   silent?: boolean;
   sound?: string;
   vibrate?: number | number[];
-  dir?: 'auto' | 'ltr' | 'rtl';
+  dir?: "auto" | "ltr" | "rtl";
   lang?: string;
   renotify?: boolean;
   sticky?: boolean;
@@ -46,7 +46,7 @@ type UseNotificationsReturn<TData = void> = {
 // Cache to store the result of the support check
 const supportCache = new Map<string, boolean>();
 
-type NotificationFeature = 'actions' | 'badge' | 'image' | 'vibrate' | 'sound';
+type NotificationFeature = "actions" | "badge" | "image" | "vibrate" | "sound";
 
 function checkFeatureSupport(feature: NotificationFeature): boolean {
   if (supportCache.has(feature)) {
@@ -62,7 +62,7 @@ export function useNotifications<
   TData = void,
 >(): UseNotificationsReturn<TData> {
   const [permission, setPermission] =
-    useState<NotificationPermission>('default');
+    useState<NotificationPermission>("default");
   const [isSupported, setIsSupported] = useState(false);
   const [isSecureContext, setIsSecureContext] = useState(false);
   const [supportsActions, setSupportsActions] = useState(false);
@@ -76,7 +76,7 @@ export function useNotifications<
 
   useEffect(() => {
     const checkSupport = () => {
-      const hasNotification = 'Notification' in window;
+      const hasNotification = "Notification" in window;
       const isSecure = window.isSecureContext;
 
       setIsSupported(hasNotification);
@@ -84,11 +84,11 @@ export function useNotifications<
 
       if (hasNotification) {
         setPermission(Notification.permission);
-        setSupportsActions(checkFeatureSupport('actions'));
-        setSupportsBadge(checkFeatureSupport('badge'));
-        setSupportsImage(checkFeatureSupport('image'));
-        setSupportsVibrate(checkFeatureSupport('vibrate'));
-        setSupportsSound(checkFeatureSupport('sound'));
+        setSupportsActions(checkFeatureSupport("actions"));
+        setSupportsBadge(checkFeatureSupport("badge"));
+        setSupportsImage(checkFeatureSupport("image"));
+        setSupportsVibrate(checkFeatureSupport("vibrate"));
+        setSupportsSound(checkFeatureSupport("sound"));
       }
     };
 
@@ -97,11 +97,11 @@ export function useNotifications<
 
   const requestPermission = useCallback(async () => {
     if (!isSupported) {
-      throw new Error('Notifications are not supported in this browser');
+      throw new Error("Notifications are not supported in this browser");
     }
 
     if (!isSecureContext) {
-      throw new Error('Notifications require a secure context (HTTPS)');
+      throw new Error("Notifications require a secure context (HTTPS)");
     }
 
     try {
@@ -109,7 +109,7 @@ export function useNotifications<
       setPermission(result);
       return result;
     } catch (error) {
-      console.error('Error requesting notification permission:', error);
+      console.error("Error requesting notification permission:", error);
       throw error;
     }
   }, [isSupported, isSecureContext]);
@@ -119,21 +119,21 @@ export function useNotifications<
       if (!isSupported) {
         // Fallback for browsers that do not support notifications
         console.warn(
-          'Notifications not supported. Consider using a fallback UI notification.',
+          "Notifications not supported. Consider using a fallback UI notification.",
         );
         return;
       }
 
       if (!isSecureContext) {
         console.warn(
-          'Notifications require HTTPS. Consider using a fallback UI notification.',
+          "Notifications require HTTPS. Consider using a fallback UI notification.",
         );
         return;
       }
 
-      if (permission !== 'granted') {
+      if (permission !== "granted") {
         console.warn(
-          'Notification permission not granted. Consider using a fallback UI notification.',
+          "Notification permission not granted. Consider using a fallback UI notification.",
         );
         return;
       }
@@ -160,10 +160,10 @@ export function useNotifications<
           notificationRef.current = null;
         };
       } catch (error) {
-        console.error('Error showing notification:', error);
+        console.error("Error showing notification:", error);
         // Fallback for UI notification in case of error
         console.warn(
-          'Failed to show system notification. Consider using a fallback UI notification.',
+          "Failed to show system notification. Consider using a fallback UI notification.",
         );
       }
     },

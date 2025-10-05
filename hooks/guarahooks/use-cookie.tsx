@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from "react";
 
 export type CookieOptions = {
   path?: string;
@@ -6,7 +6,7 @@ export type CookieOptions = {
   maxAge?: number;
   domain?: string;
   secure?: boolean;
-  sameSite?: 'strict' | 'lax' | 'none';
+  sameSite?: "strict" | "lax" | "none";
 };
 
 /**
@@ -22,15 +22,15 @@ export function useCookie<T = string>(
   initialValue?: T,
 ): [T | undefined, (value: T, options?: CookieOptions) => void, () => void] {
   // Helper to check if running in browser
-  const isBrowser = typeof document !== 'undefined';
+  const isBrowser = typeof document !== "undefined";
 
   // Parse cookie string to object
   const getCookies = useCallback((): Record<string, string> => {
     if (!isBrowser) return {};
-    return document.cookie.split('; ').reduce(
+    return document.cookie.split("; ").reduce(
       (acc, cookie) => {
-        const [k, ...v] = cookie.split('=');
-        acc[decodeURIComponent(k)] = decodeURIComponent(v.join('='));
+        const [k, ...v] = cookie.split("=");
+        acc[decodeURIComponent(k)] = decodeURIComponent(v.join("="));
         return acc;
       },
       {} as Record<string, string>,
@@ -42,7 +42,7 @@ export function useCookie<T = string>(
     (val: T | undefined, options: CookieOptions = {}) => {
       if (!isBrowser) return;
       let encodedValue: string;
-      if (typeof val === 'string') {
+      if (typeof val === "string") {
         encodedValue = encodeURIComponent(val);
       } else {
         encodedValue = encodeURIComponent(JSON.stringify(val));
@@ -53,7 +53,7 @@ export function useCookie<T = string>(
         cookieStr += `; expires=${options.expires instanceof Date ? options.expires.toUTCString() : options.expires}`;
       if (options.maxAge) cookieStr += `; max-age=${options.maxAge}`;
       if (options.domain) cookieStr += `; domain=${options.domain}`;
-      if (options.secure) cookieStr += '; secure';
+      if (options.secure) cookieStr += "; secure";
       if (options.sameSite) cookieStr += `; samesite=${options.sameSite}`;
       document.cookie = cookieStr;
     },
@@ -62,7 +62,7 @@ export function useCookie<T = string>(
 
   // Remove cookie
   const removeCookie = useCallback(() => {
-    setCookie(undefined, { path: '/', expires: new Date(0) });
+    setCookie(undefined, { path: "/", expires: new Date(0) });
   }, [setCookie]);
 
   // Get cookie value (and create if missing)

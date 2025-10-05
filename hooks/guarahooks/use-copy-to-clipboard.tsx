@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type UseCopyToClipboardReturn = {
   copied: boolean;
@@ -9,21 +9,21 @@ type UseCopyToClipboardReturn = {
 
 // Fallback to old browsers
 function fallbackCopy(str: string): boolean {
-  const textarea = document.createElement('textarea');
+  const textarea = document.createElement("textarea");
   let success = false;
 
   textarea.value = str;
-  textarea.setAttribute('readonly', '');
+  textarea.setAttribute("readonly", "");
 
-  textarea.style.position = 'absolute';
-  textarea.style.left = '-9999px';
+  textarea.style.position = "absolute";
+  textarea.style.left = "-9999px";
 
   document.body.appendChild(textarea);
 
   textarea.select();
 
   try {
-    success = document.execCommand('copy');
+    success = document.execCommand("copy");
   } catch {
     success = false;
   } finally {
@@ -57,10 +57,10 @@ export function useCopyToClipboard(
           timeoutRef.current = setTimeout(() => setCopied(false), duration);
           return true;
         } else {
-          throw new Error('Copy command failed');
+          throw new Error("Copy command failed");
         }
       } catch (err: unknown) {
-        console.error('Failed to copy text: ', err);
+        console.error("Failed to copy text: ", err);
         return false;
       }
     },

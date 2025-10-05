@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { RefObject, useEffect, useRef } from 'react';
+import { type RefObject, useEffect, useRef } from "react";
 
 // Types
 type EventTarget = Window | Document | HTMLElement | null;
@@ -33,7 +33,7 @@ export function useEventListener<
   useEffect(() => {
     // Define the element to attach the listener to
     const targetElement: EventTarget =
-      element && 'current' in element ? element.current : element;
+      element && "current" in element ? element.current : element;
 
     if (!(targetElement && targetElement.addEventListener)) {
       return;

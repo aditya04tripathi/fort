@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEFAULT_EVENTS = [
-  'keydown',
-  'mousemove',
-  'touchmove',
-  'click',
-  'scroll',
-  'wheel',
+  "keydown",
+  "mousemove",
+  "touchmove",
+  "click",
+  "scroll",
+  "wheel",
 ] as const;
 
 interface UseIdleOptions {
@@ -75,7 +75,7 @@ export function useIdle(
         clearTimeout(timer.current);
       }
     };
-  }, [timeout, events.join(','), idle]);
+  }, [timeout, events.join(","), idle]);
 
   return [idle, reset];
 }

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
 import {
-  MutableRefObject,
-  RefObject,
+  type MutableRefObject,
+  type RefObject,
   useCallback,
   useEffect,
   useRef,
   useState,
-} from 'react';
+} from "react";
 
 export interface UseScrollLockReturn {
   isLocked: boolean;
@@ -28,7 +28,7 @@ export function useScrollLock<T extends HTMLElement = HTMLElement>(
   }, [ref]);
 
   const [isLocked, setIsLocked] = useState<boolean>(false);
-  const originalOverflow = useRef<string>('');
+  const originalOverflow = useRef<string>("");
 
   const getTarget = useCallback((): HTMLElement => {
     const currentRef = refCached.current;
@@ -40,7 +40,7 @@ export function useScrollLock<T extends HTMLElement = HTMLElement>(
     if (!isLocked) {
       const target = getTarget();
       originalOverflow.current = target.style.overflow;
-      target.style.overflow = 'hidden';
+      target.style.overflow = "hidden";
       setIsLocked(true);
     }
   }, [getTarget, isLocked]);

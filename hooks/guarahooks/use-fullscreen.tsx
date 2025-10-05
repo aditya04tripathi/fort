@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // Type for the ref that can be passed to the hook
 export type FullscreenRef = React.RefObject<HTMLElement> | null;
@@ -50,17 +50,17 @@ function exitFullscreen() {
 }
 
 function addFullscreenListener(cb: () => void) {
-  document.addEventListener('fullscreenchange', cb);
-  document.addEventListener('webkitfullscreenchange', cb);
-  document.addEventListener('mozfullscreenchange', cb);
-  document.addEventListener('MSFullscreenChange', cb);
+  document.addEventListener("fullscreenchange", cb);
+  document.addEventListener("webkitfullscreenchange", cb);
+  document.addEventListener("mozfullscreenchange", cb);
+  document.addEventListener("MSFullscreenChange", cb);
 }
 
 function removeFullscreenListener(cb: () => void) {
-  document.removeEventListener('fullscreenchange', cb);
-  document.removeEventListener('webkitfullscreenchange', cb);
-  document.removeEventListener('mozfullscreenchange', cb);
-  document.removeEventListener('MSFullscreenChange', cb);
+  document.removeEventListener("fullscreenchange", cb);
+  document.removeEventListener("webkitfullscreenchange", cb);
+  document.removeEventListener("mozfullscreenchange", cb);
+  document.removeEventListener("MSFullscreenChange", cb);
 }
 
 export function useFullscreen(

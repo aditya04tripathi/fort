@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 export interface StorageLike {
   getItem(key: string): string | null;
@@ -122,9 +122,9 @@ export function useBetterAuth<
   options: UseBetterAuthOptions<TUser, TCredentials> = {},
 ): UseBetterAuthReturn<TUser, TCredentials> {
   const {
-    storageKey = 'better-auth',
-    storage = typeof window !== 'undefined' ? localStorage : undefined,
-    loginUrl = '/api/login',
+    storageKey = "better-auth",
+    storage = typeof window !== "undefined" ? localStorage : undefined,
+    loginUrl = "/api/login",
     refreshUrl,
     logoutUrl,
     refreshInterval,
@@ -134,34 +134,34 @@ export function useBetterAuth<
 
   // Debug logging in development
   const debugLog = useCallback((message: string, data?: any) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[useBetterAuth] ${message}`, data || '');
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[useBetterAuth] ${message}`, data || "");
     }
   }, []);
 
   const [token, setToken] = useState<string | null>(() => {
-    if (typeof window === 'undefined' || !storage) return null;
+    if (typeof window === "undefined" || !storage) return null;
     try {
       const storedToken = storage.getItem(`${storageKey}:token`);
-      debugLog('Initial token loaded from storage', {
+      debugLog("Initial token loaded from storage", {
         hasToken: !!storedToken,
       });
       return storedToken;
     } catch (error) {
-      debugLog('Error loading initial token', error);
+      debugLog("Error loading initial token", error);
       return null;
     }
   });
 
   const [user, setUser] = useState<TUser | null>(() => {
-    if (typeof window === 'undefined' || !storage) return null;
+    if (typeof window === "undefined" || !storage) return null;
     try {
       const saved = storage.getItem(`${storageKey}:user`);
       const userData = saved ? (JSON.parse(saved) as TUser) : null;
-      debugLog('Initial user loaded from storage', { hasUser: !!userData });
+      debugLog("Initial user loaded from storage", { hasUser: !!userData });
       return userData;
     } catch (error) {
-      debugLog('Error loading initial user', error);
+      debugLog("Error loading initial user", error);
       return null;
     }
   });
@@ -171,7 +171,7 @@ export function useBetterAuth<
 
   const login = useCallback(
     async (credentials: TCredentials) => {
-      debugLog('Login attempt started', { loginUrl });
+      debugLog("Login attempt started", { loginUrl });
       setLoading(true);
       setError(null);
 
@@ -182,15 +182,15 @@ export function useBetterAuth<
             creds: TCredentials,
             url: string,
           ): Promise<BetterAuthResponse<TUser>> => {
-            debugLog('Using default fetcher for login');
+            debugLog("Using default fetcher for login");
             const res = await fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify(creds),
             });
 
             if (!res.ok) {
-              const errorText = await res.text().catch(() => 'Unknown error');
+              const errorText = await res.text().catch(() => "Unknown error");
               throw new Error(`Login failed: ${res.status} ${errorText}`);
             }
 
@@ -198,7 +198,7 @@ export function useBetterAuth<
           });
 
         const json = await fetchFn(credentials, loginUrl);
-        debugLog('Login successful', {
+        debugLog("Login successful", {
           hasToken: !!json.token,
           hasUser: !!json.user,
         });
@@ -209,13 +209,13 @@ export function useBetterAuth<
         if (storage) {
           storage.setItem(`${storageKey}:token`, json.token);
           storage.setItem(`${storageKey}:user`, JSON.stringify(json.user));
-          debugLog('Auth data saved to storage');
+          debugLog("Auth data saved to storage");
         }
 
         onAuthChange?.(json.token, json.user);
       } catch (err) {
-        const error = err instanceof Error ? err : new Error('Login failed');
-        debugLog('Login failed', error);
+        const error = err instanceof Error ? err : new Error("Login failed");
+        debugLog("Login failed", error);
         setError(error);
         throw error;
       } finally {
@@ -226,14 +226,14 @@ export function useBetterAuth<
   );
 
   const logout = useCallback(() => {
-    debugLog('Logout initiated', { hasLogoutUrl: !!logoutUrl });
+    debugLog("Logout initiated", { hasLogoutUrl: !!logoutUrl });
 
     if (logoutUrl && token) {
       fetch(logoutUrl, {
-        method: 'POST',
+        method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       }).catch((error) => {
-        debugLog('Logout API call failed (ignored)', error);
+        debugLog("Logout API call failed (ignored)", error);
       });
     }
 
@@ -243,7 +243,7 @@ export function useBetterAuth<
     if (storage) {
       storage.removeItem(`${storageKey}:token`);
       storage.removeItem(`${storageKey}:user`);
-      debugLog('Auth data cleared from storage');
+      debugLog("Auth data cleared from storage");
     }
 
     onAuthChange?.(null, null);
@@ -251,14 +251,14 @@ export function useBetterAuth<
 
   const refresh = useCallback(async () => {
     if (!token || !refreshUrl) {
-      debugLog('Refresh skipped', {
+      debugLog("Refresh skipped", {
         hasToken: !!token,
         hasRefreshUrl: !!refreshUrl,
       });
       return;
     }
 
-    debugLog('Token refresh started');
+    debugLog("Token refresh started");
     setLoading(true);
     setError(null);
 
@@ -268,12 +268,12 @@ export function useBetterAuth<
       });
 
       if (!res.ok) {
-        const errorText = await res.text().catch(() => 'Unknown error');
+        const errorText = await res.text().catch(() => "Unknown error");
         throw new Error(`Token refresh failed: ${res.status} ${errorText}`);
       }
 
       const json = (await res.json()) as BetterAuthResponse<TUser>;
-      debugLog('Token refresh successful');
+      debugLog("Token refresh successful");
 
       setToken(json.token);
       setUser(json.user);
@@ -286,8 +286,8 @@ export function useBetterAuth<
       onAuthChange?.(json.token, json.user);
     } catch (err) {
       const error =
-        err instanceof Error ? err : new Error('Token refresh failed');
-      debugLog('Token refresh failed', error);
+        err instanceof Error ? err : new Error("Token refresh failed");
+      debugLog("Token refresh failed", error);
       setError(error);
       throw error;
     } finally {
@@ -297,7 +297,7 @@ export function useBetterAuth<
 
   const updateUser = useCallback(
     (nextUser: TUser, nextToken?: string) => {
-      debugLog('User update', { hasNewToken: !!nextToken });
+      debugLog("User update", { hasNewToken: !!nextToken });
 
       setUser(nextUser);
       if (nextToken !== undefined) {
@@ -315,7 +315,7 @@ export function useBetterAuth<
   );
 
   const clearError = useCallback(() => {
-    debugLog('Error cleared');
+    debugLog("Error cleared");
     setError(null);
   }, [debugLog]);
 
@@ -337,10 +337,10 @@ export function useBetterAuth<
   useEffect(() => {
     if (!refreshInterval || !refreshUrl) return;
 
-    debugLog('Auto-refresh enabled', { interval: refreshInterval });
+    debugLog("Auto-refresh enabled", { interval: refreshInterval });
     const id = setInterval(refresh, refreshInterval);
     return () => {
-      debugLog('Auto-refresh disabled');
+      debugLog("Auto-refresh disabled");
       clearInterval(id);
     };
   }, [refreshInterval, refreshUrl, refresh, debugLog]);

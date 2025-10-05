@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 export type ScrollPosition = {
   x: number;
@@ -14,7 +14,7 @@ export type UseScrollPositionOptions = {
 export function useScrollPosition(
   options: UseScrollPositionOptions = {},
 ): ScrollPosition {
-  const isBrowser = typeof window !== 'undefined';
+  const isBrowser = typeof window !== "undefined";
   const { onChange } = options;
 
   const [scrollPosition, setScrollPosition] = useState<ScrollPosition>({
@@ -35,11 +35,11 @@ export function useScrollPosition(
     if (!isBrowser) {
       return;
     }
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     // Initialize position on mount
     handleScroll();
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll, isBrowser]);
 

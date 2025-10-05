@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 export type ConfirmationStatus =
-  | 'idle'
-  | 'confirming'
-  | 'confirmed'
-  | 'cancelled';
+  | "idle"
+  | "confirming"
+  | "confirmed"
+  | "cancelled";
 
 interface UseConfirmReturn {
   status: ConfirmationStatus;
@@ -16,18 +16,18 @@ interface UseConfirmReturn {
 }
 
 export function useConfirm(): UseConfirmReturn {
-  const [status, setStatus] = useState<ConfirmationStatus>('idle');
+  const [status, setStatus] = useState<ConfirmationStatus>("idle");
 
   const confirm = useCallback(() => {
-    setStatus('confirmed');
+    setStatus("confirmed");
   }, []);
 
   const cancel = useCallback(() => {
-    setStatus('cancelled');
+    setStatus("cancelled");
   }, []);
 
   const reset = useCallback(() => {
-    setStatus('idle');
+    setStatus("idle");
   }, []);
 
   return {

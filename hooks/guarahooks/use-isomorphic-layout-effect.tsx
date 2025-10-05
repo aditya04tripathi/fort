@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
 import {
-  DependencyList,
-  EffectCallback,
+  type DependencyList,
+  type EffectCallback,
   useEffect,
   useLayoutEffect,
-} from 'react';
+} from "react";
 
 export function useIsomorphicLayoutEffect(
   effect: EffectCallback,
   deps?: DependencyList,
 ): void {
   const isBrowser =
-    typeof window !== 'undefined' && typeof window.document !== 'undefined';
+    typeof window !== "undefined" && typeof window.document !== "undefined";
 
   const useIsomorphicEffect = isBrowser ? useLayoutEffect : useEffect;
 

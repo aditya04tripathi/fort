@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function useClickOutside<T extends HTMLElement>(
   ref: React.RefObject<T | null>,
@@ -19,11 +19,11 @@ export function useClickOutside<T extends HTMLElement>(
       callbackRef.current(event);
     }
 
-    document.addEventListener('mousedown', handleEvent, true);
-    document.addEventListener('touchstart', handleEvent, true);
+    document.addEventListener("mousedown", handleEvent, true);
+    document.addEventListener("touchstart", handleEvent, true);
     return () => {
-      document.removeEventListener('mousedown', handleEvent, true);
-      document.removeEventListener('touchstart', handleEvent, true);
+      document.removeEventListener("mousedown", handleEvent, true);
+      document.removeEventListener("touchstart", handleEvent, true);
     };
   }, []);
 }

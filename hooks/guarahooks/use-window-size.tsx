@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 type UseWindowSizeOptions = {
   initialWidth?: number;
@@ -14,7 +14,7 @@ type WindowSize = {
 };
 
 export function useWindowSize(options: UseWindowSizeOptions = {}): WindowSize {
-  const isBrowser = typeof window !== 'undefined';
+  const isBrowser = typeof window !== "undefined";
 
   const {
     initialWidth = isBrowser ? window.innerWidth : 0,
@@ -41,12 +41,12 @@ export function useWindowSize(options: UseWindowSizeOptions = {}): WindowSize {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Call handler right away to update size on mount
     handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [onChange, isBrowser]);
 
   return windowSize;

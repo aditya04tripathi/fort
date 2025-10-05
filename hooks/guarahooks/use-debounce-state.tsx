@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
 import {
-  SetStateAction,
+  type SetStateAction,
   useCallback,
   useEffect,
   useRef,
   useState,
-} from 'react';
+} from "react";
 
 interface UseDebouncedStateOptions {
   leading?: boolean;

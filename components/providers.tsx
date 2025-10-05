@@ -1,7 +1,8 @@
 "use client";
 
-import React, { Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type React from "react";
+import { Suspense } from "react";
 import { Toaster } from "sonner";
 import LoadingComponent from "@/components/loading-component";
 

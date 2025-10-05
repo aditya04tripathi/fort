@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 interface UseKeyboardOptions {
   combo: string | string[];
@@ -12,10 +12,10 @@ interface UseKeyboardOptions {
 function normalizeCombo(combo: string): string {
   const parts = combo
     .toLowerCase()
-    .split('+')
+    .split("+")
     .map((p) => p.trim());
 
-  const modifiers = ['ctrl', 'alt', 'shift', 'meta'];
+  const modifiers = ["ctrl", "alt", "shift", "meta"];
   const keys: string[] = [];
   const mods: string[] = [];
 
@@ -29,23 +29,23 @@ function normalizeCombo(combo: string): string {
 
   // Sort modifiers for consistent comparison
   mods.sort((a, b) => modifiers.indexOf(a) - modifiers.indexOf(b));
-  return [...mods, ...keys].join('+');
+  return [...mods, ...keys].join("+");
 }
 
 function eventMatchesCombo(
   event: KeyboardEvent,
   normalizedCombo: string,
 ): boolean {
-  const modifiers = ['ctrl', 'alt', 'shift', 'meta'];
+  const modifiers = ["ctrl", "alt", "shift", "meta"];
   const eventMods = [
-    event.ctrlKey ? 'ctrl' : null,
-    event.altKey ? 'alt' : null,
-    event.shiftKey ? 'shift' : null,
-    event.metaKey ? 'meta' : null,
+    event.ctrlKey ? "ctrl" : null,
+    event.altKey ? "alt" : null,
+    event.shiftKey ? "shift" : null,
+    event.metaKey ? "meta" : null,
   ].filter(Boolean) as string[];
 
   const key = event.key.toLowerCase();
-  const comboParts = normalizedCombo.split('+');
+  const comboParts = normalizedCombo.split("+");
   const comboMods = comboParts.filter((p) => modifiers.includes(p));
   const comboKey = comboParts.find((p) => !modifiers.includes(p));
 
@@ -95,9 +95,9 @@ export function useKeypress({
 
   useEffect(() => {
     const el = target ?? window;
-    el.addEventListener('keydown', handler);
+    el.addEventListener("keydown", handler);
     return () => {
-      el.removeEventListener('keydown', handler);
+      el.removeEventListener("keydown", handler);
     };
   }, [handler, target]);
 }

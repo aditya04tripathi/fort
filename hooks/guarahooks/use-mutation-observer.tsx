@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 
 // Types
 type UseMutationObserverProps<T extends HTMLElement = HTMLElement> = {

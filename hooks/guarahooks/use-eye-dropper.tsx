@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import useEyeDropper from 'use-eye-dropper';
+import useEyeDropper from "use-eye-dropper";
 
 type UseColorPickerReturn = {
   color: string;
@@ -13,7 +13,7 @@ type UseColorPickerReturn = {
 
 export function useColorPicker(): UseColorPickerReturn {
   const { open, close, isSupported } = useEyeDropper();
-  const [color, setColor] = useState('#fff');
+  const [color, setColor] = useState("#fff");
   const [error, setError] = useState<Error | null>(null);
 
   const pickColor = useCallback(() => {

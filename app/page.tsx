@@ -1,5 +1,5 @@
-import LoadingComponent from "@/components/loading-component";
 import React, { Suspense } from "react";
+import LoadingComponent from "@/components/loading-component";
 
 export default function Home() {
   return (

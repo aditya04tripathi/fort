@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
 import {
   createContext,
+  type PropsWithChildren,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
-  type PropsWithChildren,
-  type ReactNode,
-} from 'react';
+} from "react";
 
 // #region Types & Interfaces
-export interface FetchConfig extends Omit<RequestInit, 'body' | 'signal'> {
+export interface FetchConfig extends Omit<RequestInit, "body" | "signal"> {
   baseURL?: string;
   timeout?: number;
   retries?: number;
@@ -20,7 +20,7 @@ export interface FetchConfig extends Omit<RequestInit, 'body' | 'signal'> {
 }
 
 export interface FetchOptions<TBody = BodyInit | null>
-  extends Omit<RequestInit, 'body'> {
+  extends Omit<RequestInit, "body"> {
   body?: TBody;
   timeout?: number;
   retries?: number;
@@ -70,8 +70,8 @@ export function FetchProvider({ config = {}, children }: FetchProviderProps) {
 
       // Construct full URL
       const fullUrl =
-        currentConfig.baseURL && !url.startsWith('http')
-          ? `${currentConfig.baseURL.replace(/\/$/, '')}/${url.replace(/^\//, '')}`
+        currentConfig.baseURL && !url.startsWith("http")
+          ? `${currentConfig.baseURL.replace(/\/$/, "")}/${url.replace(/^\//, "")}`
           : url;
 
       // Merge headers
@@ -122,7 +122,7 @@ export function FetchProvider({ config = {}, children }: FetchProviderProps) {
           lastError = error as Error;
 
           // Don't retry on abort or non-network errors
-          if (error instanceof DOMException && error.name === 'AbortError') {
+          if (error instanceof DOMException && error.name === "AbortError") {
             throw error;
           }
 
@@ -136,7 +136,7 @@ export function FetchProvider({ config = {}, children }: FetchProviderProps) {
         }
       }
 
-      throw lastError || new Error('Unknown fetch error');
+      throw lastError || new Error("Unknown fetch error");
     },
     [currentConfig],
   );
@@ -158,7 +158,7 @@ export function useFetchContext(): FetchContextValue {
   const context = useContext(FetchContext);
 
   if (!context) {
-    throw new Error('useFetch must be used within a FetchProvider');
+    throw new Error("useFetch must be used within a FetchProvider");
   }
 
   return context;
@@ -219,7 +219,7 @@ export function useFetch<
     } catch (err) {
       if (!isMounted.current) return null;
 
-      if (err instanceof DOMException && err.name === 'AbortError') {
+      if (err instanceof DOMException && err.name === "AbortError") {
         setAborted(true);
       } else {
         setError(err as Error);

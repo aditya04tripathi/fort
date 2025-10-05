@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 
 interface UseAbortControllerOptions {
   abortOnUnmount?: boolean;
@@ -30,7 +30,7 @@ export function useAbortController(
 
   const reset = useCallback(() => {
     if (!controllerRef.current.signal.aborted) {
-      controllerRef.current.abort('Reset');
+      controllerRef.current.abort("Reset");
     }
     controllerRef.current = new AbortController();
   }, []);
@@ -51,7 +51,7 @@ export function useAbortController(
 
     return () => {
       if (abortOnUnmount && !currentController.signal.aborted) {
-        currentController.abort('Component unmounted');
+        currentController.abort("Component unmounted");
       }
     };
   }, [abortOnUnmount]);

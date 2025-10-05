@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
 import {
-  FieldValues,
-  SubmitErrorHandler,
-  SubmitHandler,
+  type FieldValues,
+  type SubmitErrorHandler,
+  type SubmitHandler,
+  type UseFormProps,
+  type UseFormReturn,
   useForm,
-  UseFormProps,
-  UseFormReturn,
-} from 'react-hook-form';
+} from "react-hook-form";
 
 /**
  * Extended React Hook Form return type with a simplified onSubmit handler.
@@ -49,8 +49,8 @@ export function useReactHookForm<T extends FieldValues = FieldValues>(
 
   // Debug: Log form state changes in development mode
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.debug('[useReactHookForm] formState changed:', formState);
+    if (process.env.NODE_ENV === "development") {
+      console.debug("[useReactHookForm] formState changed:", formState);
     }
   }, [formState]);
 

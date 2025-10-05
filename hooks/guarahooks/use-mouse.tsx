@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { RefObject, useCallback, useEffect, useState } from 'react';
+import { type RefObject, useCallback, useEffect, useState } from "react";
 
 export type UseMouseOptions = {
   ref: RefObject<HTMLElement>;
@@ -36,10 +36,10 @@ export function useMouse({
   trackOutside = false,
   clampToZero = false,
 }: UseMouseOptions): MouseData {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     if (!ref?.current) {
       console.error(
-        'useMouse: ref is required and must point to an HTMLElement!',
+        "useMouse: ref is required and must point to an HTMLElement!",
       );
     }
   }
@@ -113,9 +113,9 @@ export function useMouse({
   );
 
   useEffect(() => {
-    document.addEventListener('mousemove', moveHandler);
+    document.addEventListener("mousemove", moveHandler);
     return () => {
-      document.removeEventListener('mousemove', moveHandler);
+      document.removeEventListener("mousemove", moveHandler);
     };
   }, [moveHandler]);
 

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Montserrat, Merriweather, Space_Mono } from "next/font/google";
+import { Merriweather, Montserrat, Space_Mono } from "next/font/google";
 import "./globals.css";
-import Providers from "@/components/providers";
 import { Suspense } from "react";
 import LoadingComponent from "@/components/loading-component";
+import Providers from "@/components/providers";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",

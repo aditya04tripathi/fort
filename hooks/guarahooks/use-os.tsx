@@ -1,12 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
 export enum OS {
-  Undetermined = 'undetermined',
-  MacOS = 'macos',
-  IOS = 'ios',
-  Windows = 'windows',
-  Android = 'android',
-  Linux = 'linux',
+  Undetermined = "undetermined",
+  MacOS = "macos",
+  IOS = "ios",
+  Windows = "windows",
+  Android = "android",
+  Linux = "linux",
 }
 
 const macosPattern = /(Macintosh)|(MacIntel)|(MacPPC)|(Mac68K)/i;
@@ -19,8 +19,8 @@ function detectOS(userAgent: string): OS {
   if (
     iosPattern.test(userAgent) ||
     (macosPattern.test(userAgent) &&
-      typeof document !== 'undefined' &&
-      'ontouchend' in document)
+      typeof document !== "undefined" &&
+      "ontouchend" in document)
   ) {
     return OS.IOS;
   }
@@ -41,7 +41,7 @@ function detectOS(userAgent: string): OS {
 
 export function useOS(): OS {
   return useMemo(() => {
-    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    if (typeof window === "undefined" || typeof navigator === "undefined") {
       return OS.Undetermined;
     }
     return detectOS(navigator.userAgent);

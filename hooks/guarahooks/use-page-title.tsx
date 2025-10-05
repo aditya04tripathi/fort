@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
 // Types
 interface PageTitleOptions {
@@ -14,9 +14,9 @@ interface UsePageTitleReturn {
 }
 
 export function usePageTitle(options?: PageTitleOptions): UsePageTitleReturn {
-  const suffix = options?.suffix || '';
-  const separator = options?.separator || ' | ';
-  const originalTitle = typeof document !== 'undefined' ? document.title : '';
+  const suffix = options?.suffix || "";
+  const separator = options?.separator || " | ";
+  const originalTitle = typeof document !== "undefined" ? document.title : "";
 
   const formatTitle = useCallback(
     (title: string) => {
@@ -30,7 +30,7 @@ export function usePageTitle(options?: PageTitleOptions): UsePageTitleReturn {
 
   const setTitle = useCallback(
     (title: string) => {
-      if (typeof document !== 'undefined') {
+      if (typeof document !== "undefined") {
         document.title = formatTitle(title);
       }
     },
@@ -38,7 +38,7 @@ export function usePageTitle(options?: PageTitleOptions): UsePageTitleReturn {
   );
 
   const resetTitle = useCallback(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       document.title = originalTitle;
     }
   }, [originalTitle]);

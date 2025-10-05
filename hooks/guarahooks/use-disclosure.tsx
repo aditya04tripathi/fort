@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from "react";
 
 interface DisclosureCallbacks {
   onOpen?: () => void;
@@ -17,7 +17,7 @@ interface DisclosureState {
 export function useDisclosure(
   initialState = false,
   callbacks?: DisclosureCallbacks,
-): [boolean, Omit<DisclosureState, 'isOpen'>] {
+): [boolean, Omit<DisclosureState, "isOpen">] {
   const callbacksRef = useRef(callbacks);
   callbacksRef.current = callbacks;
 

@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
+import axios, {
+  type AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+} from "axios";
 import {
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
-  type ReactNode,
-} from 'react';
-
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios';
+} from "react";
 
 // #region Types & Interfaces
 
@@ -87,7 +86,7 @@ export function AxiosProvider({ config = {}, children }: AxiosProviderProps) {
   }, [currentConfig]);
 
   const enhancedRequest = useCallback(
-    async <T = any,>(
+    async <T = any>(
       requestConfig: AxiosRequestConfig,
     ): Promise<AxiosResponse<T>> => {
       const {
@@ -100,7 +99,7 @@ export function AxiosProvider({ config = {}, children }: AxiosProviderProps) {
       };
 
       if (!instanceRef.current) {
-        throw new Error('Axios instance not initialized');
+        throw new Error("Axios instance not initialized");
       }
 
       let lastError: AxiosError | null = null;
@@ -132,7 +131,7 @@ export function AxiosProvider({ config = {}, children }: AxiosProviderProps) {
         }
       }
 
-      throw lastError || new Error('Unknown axios error');
+      throw lastError || new Error("Unknown axios error");
     },
     [currentConfig],
   );
@@ -154,7 +153,7 @@ export function AxiosProvider({ config = {}, children }: AxiosProviderProps) {
 export function useAxiosContext(): AxiosContextValue {
   const context = useContext(AxiosContext);
   if (!context) {
-    throw new Error('useAxios must be used within an AxiosProvider');
+    throw new Error("useAxios must be used within an AxiosProvider");
   }
   return context;
 }
@@ -251,7 +250,7 @@ export function useAxiosGet<T = any>(
   url: string,
   config: AxiosOptions = {},
 ): AxiosResult<T> {
-  return useAxios<T>({ ...config, method: 'GET', url });
+  return useAxios<T>({ ...config, method: "GET", url });
 }
 
 export function useAxiosPost<T = any>(
@@ -259,7 +258,7 @@ export function useAxiosPost<T = any>(
   data?: any,
   config: AxiosOptions = {},
 ): AxiosResult<T> {
-  return useAxios<T>({ ...config, method: 'POST', url, data });
+  return useAxios<T>({ ...config, method: "POST", url, data });
 }
 
 export function useAxiosPut<T = any>(
@@ -267,14 +266,14 @@ export function useAxiosPut<T = any>(
   data?: any,
   config: AxiosOptions = {},
 ): AxiosResult<T> {
-  return useAxios<T>({ ...config, method: 'PUT', url, data });
+  return useAxios<T>({ ...config, method: "PUT", url, data });
 }
 
 export function useAxiosDelete<T = any>(
   url: string,
   config: AxiosOptions = {},
 ): AxiosResult<T> {
-  return useAxios<T>({ ...config, method: 'DELETE', url });
+  return useAxios<T>({ ...config, method: "DELETE", url });
 }
 
 export function useAxiosPatch<T = any>(
@@ -282,7 +281,7 @@ export function useAxiosPatch<T = any>(
   data?: any,
   config: AxiosOptions = {},
 ): AxiosResult<T> {
-  return useAxios<T>({ ...config, method: 'PATCH', url, data });
+  return useAxios<T>({ ...config, method: "PATCH", url, data });
 }
 
 // Hook for multiple requests without state management
@@ -290,32 +289,32 @@ export function useAxiosInstance() {
   const { instance, request } = useAxiosContext();
 
   const get = useCallback(
-    <T = any,>(url: string, config?: AxiosRequestConfig) =>
-      request<T>({ ...config, method: 'GET', url }),
+    <T = any>(url: string, config?: AxiosRequestConfig) =>
+      request<T>({ ...config, method: "GET", url }),
     [request],
   );
 
   const post = useCallback(
-    <T = any,>(url: string, data?: any, config?: AxiosRequestConfig) =>
-      request<T>({ ...config, method: 'POST', url, data }),
+    <T = any>(url: string, data?: any, config?: AxiosRequestConfig) =>
+      request<T>({ ...config, method: "POST", url, data }),
     [request],
   );
 
   const put = useCallback(
-    <T = any,>(url: string, data?: any, config?: AxiosRequestConfig) =>
-      request<T>({ ...config, method: 'PUT', url, data }),
+    <T = any>(url: string, data?: any, config?: AxiosRequestConfig) =>
+      request<T>({ ...config, method: "PUT", url, data }),
     [request],
   );
 
   const del = useCallback(
-    <T = any,>(url: string, config?: AxiosRequestConfig) =>
-      request<T>({ ...config, method: 'DELETE', url }),
+    <T = any>(url: string, config?: AxiosRequestConfig) =>
+      request<T>({ ...config, method: "DELETE", url }),
     [request],
   );
 
   const patch = useCallback(
-    <T = any,>(url: string, data?: any, config?: AxiosRequestConfig) =>
-      request<T>({ ...config, method: 'PATCH', url, data }),
+    <T = any>(url: string, data?: any, config?: AxiosRequestConfig) =>
+      request<T>({ ...config, method: "PATCH", url, data }),
     [request],
   );
 

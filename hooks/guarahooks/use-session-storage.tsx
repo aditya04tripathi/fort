@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 interface UseSessionStorageOptions<T> {
   serialize?: (value: T) => string;
@@ -34,7 +34,7 @@ function useSessionStorage<T>(
   const initialRef = useRef(initialValue);
 
   const readValue = useCallback((): T => {
-    if (typeof window === 'undefined') return initialRef.current;
+    if (typeof window === "undefined") return initialRef.current;
 
     try {
       const item = window.sessionStorage.getItem(key);
@@ -81,9 +81,9 @@ function useSessionStorage<T>(
       }
     };
 
-    window.addEventListener('storage', handleStorage);
+    window.addEventListener("storage", handleStorage);
 
-    return () => window.removeEventListener('storage', handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, [key, readValue]);
 
   // Update the value if the key changes
