@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { SHA256 } from 'crypto-js';
 
 @Schema({ _id: false })
 class UserProfile {
-	@Prop({ trim: true, maxlength: 100 })
+	@Prop({ trim: true, maxlength: 100, default: '' })
 	fullName?: string;
 
 	@Prop({ maxlength: 150, default: '' })
@@ -27,6 +28,16 @@ class UserProfile {
 }
 
 const UserProfileSchema = SchemaFactory.createForClass(UserProfile);
+UserProfileSchema.pre('save', function (next) {
+	if (!this.isModified('avatar') || this.avatar === '') {
+		const nameWithoutSpacesAndSpecialChars = this.fullName
+			? this.fullName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
+			: Math.random().toString(36).substring(2, 15);
+		const hashedName = SHA256(nameWithoutSpacesAndSpecialChars).toString();
+		this.avatar = `https://gravatar.com/avatar/${hashedName}?d=identicon`;
+	}
+	next();
+});
 
 @Schema({ _id: false })
 class UserCounts {

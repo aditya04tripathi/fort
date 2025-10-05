@@ -45,7 +45,9 @@ export class AuthService {
 				username: userData.username,
 				email: userData.email,
 				passwordHash,
-				profile: {},
+				profile: {
+					fullName: userData.fullName || '',
+				},
 				counts: {},
 			});
 			if (!newUser) {
