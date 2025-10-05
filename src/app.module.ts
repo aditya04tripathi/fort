@@ -15,12 +15,11 @@ import { StoryModule } from './story/story.module';
 import { SavedPostModule } from './saved-post/saved-post.module';
 import { NotificationModule } from './notification/notification.module';
 import { HashtagModule } from './hashtag/hashtag.module';
-import { DATABASE_URL } from './constants';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot(),
-		MongooseModule.forRoot(process.env.DATABASE_URL || DATABASE_URL),
+		MongooseModule.forRoot(process.env.DATABASE_URL!),
 		DatabaseModule,
 		JwtModule,
 		AuthModule,
