@@ -40,16 +40,30 @@ export const metadata: Metadata = {
   creator: "Aditya Tripathi",
   keywords: ["fort", "mental health", "anonymous"],
   openGraph: {
-    images: "/opengraph-image.png",
+    type: "website",
+    url: "https://menmattertoo.space",
     title: "Fort | A Safe Space",
     description:
       "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
-    url: "https://menmattertoo.space",
     siteName: "Fort",
-    locale: "en-AU",
-    type: "website",
-    countryName: "Australia",
-    emails: ["adityatripathi.at04@gmail.com"],
+    images: [
+      {
+        url: "https://menmattertoo.space/opengraph-image.png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@fortress",
+    title: "Fort | A Safe Space",
+    description:
+      "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
+    images: [
+      {
+        url: "https://menmattertoo.space/opengraph-image.png",
+      },
+    ],
+    creator: "Aditya Tripathi",
   },
 };
 
