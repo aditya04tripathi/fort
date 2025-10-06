@@ -1,5 +1,42 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_URL || "https://menmattertoo.space"
+  ),
+  icons: "/favicon.ico",
+  manifest: "/site.webmanifest",
+  title: {
+    default: "Fort",
+    template: "%s | Fort",
+  },
+  description:
+    "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
+  authors: [
+    {
+      name: "Aditya Tripathi",
+    },
+  ],
+  creator: "Aditya Tripathi",
+  keywords: ["fort", "mental health", "anonymous"],
+  openGraph: {
+    type: "website",
+    url: process.env.NEXT_PUBLIC_URL || "https://menmattertoo.space",
+    title: "Fort | A Safe Space",
+    description:
+      "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
+    siteName: "Fort",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fort | A Safe Space",
+    description:
+      "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
+    creator: "@adityatripathi",
+  },
+};
 
 const AuthLayout = ({ children }: { children: Readonly<React.ReactNode> }) => {
   return (

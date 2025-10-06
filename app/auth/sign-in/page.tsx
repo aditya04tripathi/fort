@@ -3,16 +3,21 @@ import SignInPageClient from "./page-client";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://menmattertoo.space"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_URL || "https://menmattertoo.space"
+  ),
   title: "Sign In",
   description: "Sign in to your Fortress account to continue your journey.",
   openGraph: {
     title: "Sign In | Fortress",
     description: "Sign in to your Fortress account to continue your journey.",
+    type: "website",
   },
   twitter: {
+    card: "summary_large_image",
     title: "Sign In | Fortress",
     description: "Sign in to your Fortress account to continue your journey.",
+    creator: "@adityatripathi",
   },
 };
 
