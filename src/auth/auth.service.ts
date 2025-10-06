@@ -40,15 +40,18 @@ export class AuthService {
 				);
 			}
 
+			console.log(userData);
+
 			const passwordHash = await bcrypt.hash(userData.password, 10);
 			const newUser = await this.userModel.create({
 				username: userData.username,
 				email: userData.email,
 				passwordHash,
 				profile: {
-					fullName: userData.fullName || '',
+					fullName: userData.fullName,
 				},
 				counts: {},
+				isPrivate: userData.isPrivate ?? true,
 			});
 			if (!newUser) {
 				throw new HttpException(

@@ -30,9 +30,10 @@ class UserProfile {
 const UserProfileSchema = SchemaFactory.createForClass(UserProfile);
 UserProfileSchema.pre('save', function (next) {
 	if (!this.isModified('avatar') || this.avatar === '') {
-		const nameWithoutSpacesAndSpecialChars = this.fullName
-			? this.fullName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
-			: Math.random().toString(36).substring(2, 15);
+		const nameWithoutSpacesAndSpecialChars =
+			`${this.fullName}${Math.random().toString(36).substring(2, 15)}`
+				?.replace(/[^a-zA-Z0-9]/g, '')
+				.toLowerCase();
 		const hashedName = SHA256(nameWithoutSpacesAndSpecialChars).toString();
 		this.avatar = `https://gravatar.com/avatar/${hashedName}?d=identicon`;
 	}
@@ -87,7 +88,7 @@ export class User {
 	@Prop({ default: false })
 	isVerified: boolean;
 
-	@Prop({ default: false })
+	@Prop()
 	isPrivate: boolean;
 
 	@Prop()
