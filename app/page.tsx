@@ -1,7 +1,26 @@
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://menmattertoo.space"),
+  title: "Welcome",
+  description: "Welcome to Fort",
+  twitter: {
+    title: "Welcome to Fort",
+    description:
+      "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
+    card: "summary_large_image",
+  },
+  openGraph: {
+    title: "Welcome to Fort",
+    description:
+      "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
+    type: "website",
+  },
+};
 
 export default function Home() {
   return (

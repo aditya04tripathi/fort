@@ -3,6 +3,7 @@ import SignUpPageClient from "./page-client";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://menmattertoo.space"),
   title: "Sign Up",
   description: "Sign up to your Fortress account to join the brotherhood.",
   openGraph: {
