@@ -5,11 +5,11 @@ import React from "react";
 
 export default function Home() {
   return (
-    <div className="container mx-auto w-full h-screen flex flex-col gap-5 items-center justify-center">
-      <Logo className="max-h-52 w-auto" />
-      <h1>
+    <div className="container flex flex-col items-center justify-center w-full h-screen gap-5 mx-auto">
+      <Logo className="w-auto max-h-52" />
+      <h1 className="text-center leading-16 text-bold">
         Welcome to{" "}
-        <span className="text-primary-foreground bg-primary p-2">Fortress</span>
+        <span className="p-2 text-primary-foreground bg-primary">Fortress</span>
       </h1>
 
       <p className="text-center text-muted-foreground">
