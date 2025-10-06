@@ -12,7 +12,13 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <Suspense fallback={<LoadingComponent />}>
       <QueryClientProvider client={queryClient}>
         {children}
-        <Toaster />
+        <Toaster
+          duration={2500}
+          closeButton
+          richColors
+          theme="dark"
+          className="select-none"
+        />
       </QueryClientProvider>
     </Suspense>
   );

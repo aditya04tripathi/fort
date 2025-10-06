@@ -3,10 +3,13 @@
 import type { TResponseLogin } from "@/types";
 import { cookies } from "next/headers";
 
-export async function loginAction(
-  usernameOrEmail: string = "testuser",
-  password: string = "testpassword"
-) {
+export async function signInAction({
+  usernameOrEmail,
+  password,
+}: {
+  usernameOrEmail: string;
+  password: string;
+}) {
   const response = await fetch(`${process.env.API_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -20,7 +23,7 @@ export async function loginAction(
   const json = (await response.json()) as TResponseLogin;
 
   if (!json.okay || !json.message) {
-    throw new Error("Login failed");
+    throw new Error(json.error ?? "Failed to sign in. Please try again.");
   }
 
   const cookieStore = await cookies();
