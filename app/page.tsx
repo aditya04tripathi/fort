@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   openGraph: {
+    url: "https://menmattertoo.space",
     title: "Welcome to Fort",
     description:
       "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
