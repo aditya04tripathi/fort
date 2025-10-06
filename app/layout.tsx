@@ -47,6 +47,16 @@ export const metadata: Metadata = {
     description:
       "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
     siteName: "Fort",
+    images: [
+      {
+        url: "https://menmattertoo.space/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Fort | A Safe Space",
+        type: "image/png",
+        secureUrl: "https://menmattertoo.space/opengraph-image.png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -55,7 +65,12 @@ export const metadata: Metadata = {
       "Fort is a social media platform that allows men to connect, share experiences, and support each other in a safe and empowering environment. The platform is designed to foster positive masculinity, mental health awareness, and community engagement through various features such as posts, comments, and user profiles. This is achieved through anonimity, robust moderation, and a focus on constructive interactions.",
     images: [
       {
-        url: "https://menmattertoo.space/opengraph-image.png",
+        url: "https://menmattertoo.space/twitter-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Fort | A Safe Space",
+        type: "image/png",
+        secureUrl: "https://menmattertoo.space/twitter-image.png",
       },
     ],
     creator: "Aditya Tripathi",
